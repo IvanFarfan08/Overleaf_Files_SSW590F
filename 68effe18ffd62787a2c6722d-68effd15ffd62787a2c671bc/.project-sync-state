@@ -18,6 +18,7 @@ itOverleaf.tex
 itPasswords.tex
 itprojectproposal.tex
 prologue.tex
+itOverleafGithub.tex
 eps/UseCases/MyUseCaseDiagram.eps
 eps/UseCases/dsnHelloWorld.eps
 eps/UseCases/dsnMyDiagram.eps
@@ -28,4 +29,4 @@ png/colorButtonPage.jpg
 png/latexdocker.png
 png/stvAgileProcess.png
 visio/UseCases/dsnSampleUseCase.vsd
-stateHash:a400a0404e4d1202e3259d41f26ae564ee200180
+stateHash:7f2c1a2a3022cfe9e51eb3a3b1b571f5e6020f62

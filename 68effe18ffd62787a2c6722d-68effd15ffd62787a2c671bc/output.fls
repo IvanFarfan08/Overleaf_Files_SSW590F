@@ -376,6 +376,8 @@ INPUT ./itBugzilla.tex
 INPUT ./itBugzilla.tex
 INPUT ./itOverleaf.tex
 INPUT ./itOverleaf.tex
+INPUT ./itOverleafGithub.tex
+INPUT ./itOverleafGithub.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/textcomp.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/textcomp.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/ot1txr.fd
@@ -413,6 +415,9 @@ INPUT itBugzilla.aux
 INPUT ./itOverleaf.aux
 INPUT ./itOverleaf.aux
 INPUT itOverleaf.aux
+INPUT ./itOverleafGithub.aux
+INPUT ./itOverleafGithub.aux
+INPUT itOverleafGithub.aux
 OUTPUT output.aux
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd
@@ -686,6 +691,12 @@ INPUT ./png/Overleaf.png
 INPUT ./png/Overleaf.png
 INPUT ./png/Overleaf.png
 INPUT ./png/Overleaf.png
+INPUT ./itOverleafGithub.tex
+INPUT ./itOverleafGithub.tex
+OUTPUT itOverleafGithub.aux
+INPUT ./itOverleafGithub.tex
+INPUT ./itOverleafGithub.tex
+INPUT itOverleafGithub.tex
 INPUT ./output.bbl
 INPUT ./output.bbl
 INPUT output.bbl
@@ -723,6 +734,9 @@ INPUT itBugzilla.aux
 INPUT ./itOverleaf.aux
 INPUT ./itOverleaf.aux
 INPUT itOverleaf.aux
+INPUT ./itOverleafGithub.aux
+INPUT ./itOverleafGithub.aux
+INPUT itOverleafGithub.aux
 INPUT ./output.out
 INPUT ./output.out
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/rtcxr.pfb
