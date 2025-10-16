@@ -224,11 +224,12 @@ manual intervention. The service keeps updating projects (including this one) an
 \section{Compiling Overleaf Projects from the Command Line}
 
 We found that compiled versions of Overleaf projects are stored in 
-\texttt{toolkit/data/overleaf/data/compiles}.  
+toolkit/data/overleaf/data/compiles. 
+
 Each folder in this directory is mapped to a unique \texttt{projectID\_userID} pair.
 
 This means that one can enter the Docker image created in 
-\hyperref[chap::LaTeXDocker]{Chapter~\ref*{chap:LaTeXDocker}} and compile directly from the 
+\hyperref[chap::LaTeXDocker]{Chapter~\ref*{chap::LaTeXDocker}} and compile directly from the 
 command line using \texttt{latexmk} or a similar compiler.  
 However, Overleaf automatically generates compiled PDF files for each project, 
 and these can already be found in the corresponding folder under the 
