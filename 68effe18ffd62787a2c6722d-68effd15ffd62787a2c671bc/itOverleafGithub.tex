@@ -46,13 +46,12 @@ Configuring Nginx in this way is crucial because it acts as a reverse proxy—ma
 
 \section{Configuring LaTeX Packages in Overleaf (Container)}
 
-To ensure our Overleaf container can compile \emph{any} project (including those requiring uncommon packages), we installed the full TeX Live scheme inside the running container.
+To enable full LaTeX package support inside the Overleaf container, we used the following commands:
 
 \subsection*{Steps}
 
 \paragraph{1) Update \texttt{tlmgr} (TeX Live Manager).}
 \begin{minted}{bash}
-# Replace 'sharelatex' with your container name if different
 docker exec sharelatex tlmgr update --self
 \end{minted}
 \emph{Why:} Brings the package manager itself up-to-date so subsequent installs use the latest metadata.
@@ -62,4 +61,4 @@ docker exec sharelatex tlmgr update --self
 docker exec sharelatex tlmgr install scheme-full
 \end{minted}
 \emph{Why:} \texttt{scheme-full} pulls essentially all TeX Live packages, covering most class/style/font dependencies you’ll encounter.
-\textbf{Note:} This takes a long time and uses many GB of disk space.
+\textbf{Note:} This took a long time and it's not permanent, it will reset to the basic Latex version if the container is rebuilt.
