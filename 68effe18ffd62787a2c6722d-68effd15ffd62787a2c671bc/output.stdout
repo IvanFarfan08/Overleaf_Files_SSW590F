@@ -28,21 +28,10 @@ Latexmk: Log file says output to 'output.pdf'
 Have index file 'output.idx', output.ind output
 Latexmk: Found bibliography file(s):
   ./bibfile.bib
-Latexmk: applying rule 'makeindex output.idx'...
-Rule 'makeindex output.idx':  Reasons for rerun
-Changed files or newly in use/created:
-  output.idx
-
-------------
-Run number 1 of rule 'makeindex output.idx'
-------------
-------------
-Running 'makeindex  -o "output.ind" "output.idx"'
-------------
 Latexmk: applying rule 'bibtex output'...
 Rule 'bibtex output':  Reasons for rerun
 Changed files or newly in use/created:
-  output.aux
+  itOverleafGithub.aux
 
 ------------
 Run number 1 of rule 'bibtex output'
@@ -65,10 +54,6 @@ Latexmk: applying rule 'pdflatex'...
 Rule 'pdflatex':  Reasons for rerun
 Changed files or newly in use/created:
   itOverleafGithub.aux
-  output.aux
-  output.ind
-  output.lof
-  output.lot
   output.out
   output.toc
 
