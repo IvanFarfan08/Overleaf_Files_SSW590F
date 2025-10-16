@@ -50,4 +50,5 @@
 \contentsline {paragraph}{1) Update \texttt {tlmgr} (TeX Live Manager).}{29}{section*.19}%
 \contentsline {paragraph}{2) Install the full TeX Live package set.}{29}{section*.20}%
 \contentsline {section}{\numberline {10.5}Connecting Overleaf to GitHub}{29}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Compiling Overleaf Projects from the Command Line}{33}{section.10.6}%
 \contentsline {chapter}{Bibliography}{35}{chapter*.25}%
