@@ -184,6 +184,13 @@ EOF
 sudo chmod +x /usr/local/bin/compiles-export-push.sh
 \end{minted}
 
+This script continuously monitors the Overleaf compile directory for any changes using
+\texttt{inotifywait}. Whenever a project is recompiled, it automatically syncs the updated
+subfolder to the local Git staging directory using \texttt{rsync}, commits the changes, and
+pushes them to the GitHub repository.  
+The \texttt{DEBOUNCE} variable ensures that each subfolder is only pushed once every few
+seconds, preventing redundant commits during rapid file writes.
+
 \subsection*{Systemd Service}
 
 \begin{minted}{bash}
@@ -208,4 +215,10 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now compiles-export-push.service
 \end{minted}
 
-The service shows as active and correctly pushes changes from the Overleaf compile directories to GitHub whenever a new project is compiled. The repo is available \hyperref[https://github.com/IvanFarfan08/Overleaf_Files_SSW590F]{here}
+The Systemd service runs the watcher script automatically in the background.
+It starts on boot, restarts on failure, and ensures continuous syncing between
+Overleaf and GitHub. By enabling it with \texttt{systemctl enable --now}, the
+service remains active and constantly monitors the compile directory without
+manual intervention.
+
+The service shows as active and correctly pushes changes from the Overleaf compile directories to GitHub whenever a new project is compiled. The repo is available \href[https://github.com/IvanFarfan08/Overleaf_Files_SSW590F]{here}

@@ -23,7 +23,6 @@ Latexmk: Examining 'output.fls'
 Latexmk: Examining 'output.log'
 Latexmk: Index file 'output.idx' was written
 Latexmk: Found input bbl file 'output.bbl'
-Latexmk: References changed.
 Latexmk: Log file says output to 'output.pdf'
 Have index file 'output.idx', output.ind output
 Latexmk: Found bibliography file(s):
@@ -56,7 +55,6 @@ Rule 'pdflatex':  Reasons for rerun
 Changed files or newly in use/created:
   itOverleafGithub.aux
   output.aux
-  output.out
   output.toc
 
 ------------
