@@ -62,3 +62,159 @@ docker exec sharelatex tlmgr install scheme-full
 \end{minted}
 \emph{Why:} \texttt{scheme-full} pulls essentially all TeX Live packages, covering most class/style/font dependencies you’ll encounter.
 \textbf{Note:} This took a long time and it's not permanent, it will reset to the basic Latex version if the container is rebuilt.
+
+\section{Connecting Overleaf to GitHub}
+
+We connected our Overleaf instance at \texttt{overleaf.ssw590f25.me} to GitHub to automatically sync compiled project files.
+
+\subsection*{Generating SSH Keys and Configuring Access}
+
+\begin{minted}{bash}
+ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519_exports -N "" -C "overleaf-exports"
+ssh-keyscan github.com >> /root/.ssh/known_hosts
+chmod 600 /root/.ssh/known_hosts
+cat /root/.ssh/id_ed25519_exports.pub
+ssh -i /root/.ssh/id_ed25519_exports -T git@github.com
+\end{minted}
+
+Response:
+\begin{verbatim}
+Hi IvanFarfan08/Overleaf_Files_SSW590F! You've successfully authenticated, 
+but GitHub does not provide shell access.
+\end{verbatim}
+
+Configured Git to always use this key:
+\begin{minted}{bash}
+cat >> /root/.ssh/config <<'EOF'
+Host github.com
+  User git
+  HostName github.com
+  IdentityFile ~/.ssh/id_ed25519_exports
+  IdentitiesOnly yes
+EOF
+chmod 600 /root/.ssh/config
+\end{minted}
+
+The public key was then added as a deployment key in the GitHub repository.
+
+\subsection*{Creating Export Service}
+
+\begin{minted}{bash}
+SRC="/root/Overleaf_container/toolkit/data/overleaf/data/compiles"
+DST="/root/overleaf_exports"
+REMOTE="git@github.com:IvanFarfan08/Overleaf_Files_SSW590F.git"
+
+sudo apt update
+sudo apt install -y git inotify-tools rsync
+\end{minted}
+
+Initialized the staging repository:
+
+\begin{minted}{bash}
+sudo mkdir -p "$DST"
+cd "$DST"
+git init -b main
+git config user.name  "Overleaf Export Bot"
+git config user.email "export@overleaf.local"
+
+cat > .gitignore <<'EOF'
+*.aux
+*.log
+*.out
+*.synctex.gz
+EOF
+
+git add -A
+git commit -m "Initial staging repo"
+
+ssh-keyscan github.com >> /root/.ssh/known_hosts
+chmod 600 /root/.ssh/known_hosts
+GIT_SSH_COMMAND="ssh -i $KEY -o StrictHostKeyChecking=yes" git push -u origin main
+\end{minted}
+
+\subsection*{Watcher Script}
+
+\begin{minted}{bash}
+sudo tee /usr/local/bin/compiles-export-push.sh >/dev/null <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+SRC="/root/Overleaf_container/toolkit/data/overleaf/data/compiles"
+DST="/root/overleaf_exports"
+BRANCH="main"
+KEY="/root/.ssh/id_ed25519_exports"
+
+export GIT_SSH_COMMAND="ssh -i $KEY -o StrictHostKeyChecking=yes"
+
+mkdir -p "$DST"
+
+copy_and_commit() {
+  local top="$1"
+  rsync -a --delete "$SRC/$top/" "$DST/$top/"
+  cd "$DST"
+  git add "$top"
+  if ! git diff --cached --quiet; then
+    msg="export: $top @ $(date -u +'%Y-%m-%d %H:%M:%S %Z')"
+    git commit -m "$msg"
+    git push origin "$BRANCH"
+    echo "Pushed: $msg"
+  fi
+}
+
+DEBOUNCE=5
+declare -A last_at
+
+inotifywait -m -r \
+  -e close_write,modify,attrib,create,delete,move \
+  --format '%w%f' "$SRC" | while read -r path; do
+    rel="${path#"$SRC/"}"
+    top="${rel%%/*}"
+    [ -n "$top" ] || continue
+
+    now=$(date +%s)
+    last=${last_at[$top]:-0}
+    if (( now - last >= DEBOUNCE )); then
+      last_at[$top]=$now
+      echo "Detected change in $top"
+      copy_and_commit "$top" || echo "Commit/push failed for $top"
+    fi
+  done
+EOF
+
+sudo chmod +x /usr/local/bin/compiles-export-push.sh
+\end{minted}
+
+\subsection*{Systemd Service}
+
+\begin{minted}{bash}
+sudo tee /etc/systemd/system/compiles-export-push.service >/dev/null <<'EOF'
+[Unit]
+Description=Export changed Overleaf compiles subfolders to root-owned repo and push
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/compiles-export-push.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now compiles-export-push.service
+\end{minted}
+
+\subsection*{Service Status}
+
+\begin{minted}{bash}
+root@Overleafdp:~/overleaf_exports# sudo systemctl status compiles-export-push.service --no-pager
+● compiles-export-push.service - Export changed Overleaf compiles subfolders to root-owned repo and push
+     Loaded: loaded (/etc/systemd/system/compiles-export-push.service; enabled; preset: enabled)
+     Active: active (running)
+\end{minted}
+
+The service shows as active and correctly pushes changes from the Overleaf compile directories to GitHub whenever a new project is compiled.
