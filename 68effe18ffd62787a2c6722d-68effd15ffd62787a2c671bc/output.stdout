@@ -28,7 +28,6 @@ Have index file 'output.idx', output.ind output
 Latexmk: Found bibliography file(s):
   ./bibfile.bib
 Latexmk: Summary of warnings from last run of *latex:
-  Latex failed to resolve 1 reference(s)
   Latex found 1 multiply defined reference(s)
   =====Latex reported missing or unavailable character(s).
 =====See log file for details.
