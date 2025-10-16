@@ -701,6 +701,11 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/txbtt.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/public/txfonts/txi.vf
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxptmri.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxi.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/public/txfonts/txmi.vf
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxmi.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxptmri.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/public/txfonts/txmi.vf
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxmi.tfm
 INPUT ./output.bbl
 INPUT ./output.bbl
 INPUT output.bbl

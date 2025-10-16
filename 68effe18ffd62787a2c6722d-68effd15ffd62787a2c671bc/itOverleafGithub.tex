@@ -219,6 +219,4 @@ The Systemd service runs the watcher script automatically in the background.
 It starts on boot, restarts on failure, and ensures continuous syncing between
 Overleaf and GitHub. By enabling it with \texttt{systemctl enable --now}, the
 service remains active and constantly monitors the compile directory without
-manual intervention.
-
-The service shows as active and correctly pushes changes from the Overleaf compile directories to GitHub whenever a new project is compiled. The repo is available \href[https://github.com/IvanFarfan08/Overleaf_Files_SSW590F]{here}
+manual intervention. The service keeps updating projects (including this one) and is available at \href{https://github.com/IvanFarfan08/Overleaf_Files_SSW590F}{github.com/IvanFarfan08/Overleaf_Files_SSW590F}.
