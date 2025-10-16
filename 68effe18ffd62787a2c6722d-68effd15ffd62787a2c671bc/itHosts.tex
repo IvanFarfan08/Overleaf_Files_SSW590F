@@ -1,0 +1,40 @@
+\chapter{Hosts \\
+\small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
+\index{Hosts} 
+\index{Chapter!Hosts}
+\label{Chapter::Hosts}
+
+This chapter lists the primary hosts used for the project deployment.  
+Each host represents a service or container deployed within the shared DigitalOcean environment.  
+IP addresses and configurations are specific to the development setup for Fall 2025.
+
+
+\begin{longtable}{|p{4cm}|p{4cm}|p{3cm}|p{6cm}|}
+\caption{Project Hosts and Roles} \label{tab:hosts} \\
+\hline
+\textbf{Hostname / Service} & \textbf{IP Address} & \textbf{Operating System} & \textbf{Role / Purpose} \\
+\hline
+\endfirsthead
+
+\multicolumn{4}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline
+\textbf{Hostname / Service} & \textbf{IP Address} & \textbf{Operating System} & \textbf{Role / Purpose} \\
+\hline
+\endhead
+
+\hline \multicolumn{4}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+Overleaf Container & 167.71.181.60 & Ubuntu 25.04 & Overleaf LaTeX Toolkit deployed via Docker; provides collaborative document editing capabilities. \\
+\hline
+Bugzilla Container & 167.71.179.151 & Ubuntu 25.04 & Bugzilla issue tracking system deployed in a Docker container for project management and defect tracking. \\
+\hline
+DigitalOcean Droplet & N/A & Ubuntu 25.04 & Cloud infrastructure host running both the Overleaf and Bugzilla containers within the same droplet environment. \\
+\hline
+
+\end{longtable}
+
