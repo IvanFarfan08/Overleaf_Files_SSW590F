@@ -1,0 +1,7 @@
+
+*.aux
+*.log
+*.out
+*.synctex.gz
+# uncomment if you DON'T want PDFs in git:
+#*.pdf
