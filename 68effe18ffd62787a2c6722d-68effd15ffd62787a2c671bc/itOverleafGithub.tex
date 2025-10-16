@@ -8,4 +8,39 @@
 For this assignment, we performed the following tasks: getting a domain via the GitHub Student Developer Pack, getting an SSL certificate for our overleaf domain, configure Latex / Overleaf to support all packages, connecting Overleaf to Github for project version control, compiling TEX projects from the command line.
 
 \section{Domain Name}
-We decided to register the domain \texttt{ssw590f25.me} using the GitHub Student Developer Pack, which provided a free one-year domain through Namecheap. This allowed us to set up a professional web address for our project with minimal cost and effort.
+We decided to register the domain \texttt{ssw590f25.me} using the GitHub Student Developer Pack, which provided a free one-year domain through Namecheap. This allowed us to set up a professional web address for our project with minimal cost and effort. We had to add an A record using the Overleaf \hyperref[Chapter::Hosts]{container droplet IP} as host so that all traffic to the domain gets redirected to the local version of overleaf we're hosting.
+
+\section{SSL Certificate}
+\section{SSL Configuration}
+
+To enable HTTPS on our Overleaf container, we installed and configured SSL certificates from Let’s Encrypt using \texttt{certbot}. This ensures secure encrypted communication between users and the server.
+
+\begin{minted}{bash}
+apt install python3-certbot-nginx nginx
+sudo certbot --nginx certonly
+\end{minted}
+
+Once the certificate was obtained, we configured Nginx to serve as a reverse proxy — forwarding client requests to the Overleaf service while handling SSL termination.
+
+\begin{minted}{nginx}
+server {
+    listen 80;
+    server_name overleaf.ssw590f25.me;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name overleaf.ssw590f25.me;
+
+    ssl_certificate /etc/letsencrypt/live/overleaf.ssw590f25.me/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/overleaf.ssw590f25.me/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8877;
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }
+}
+\end{minted}
+
+Configuring Nginx in this way is crucial because it acts as a reverse proxy—managing secure HTTPS traffic, terminating SSL connections, and forwarding requests to the internal Overleaf container. 

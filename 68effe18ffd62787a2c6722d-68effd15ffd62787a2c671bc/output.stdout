@@ -32,6 +32,7 @@ Latexmk: applying rule 'bibtex output'...
 Rule 'bibtex output':  Reasons for rerun
 Changed files or newly in use/created:
   itOverleafGithub.aux
+  output.aux
 
 ------------
 Run number 1 of rule 'bibtex output'
@@ -54,6 +55,7 @@ Latexmk: applying rule 'pdflatex'...
 Rule 'pdflatex':  Reasons for rerun
 Changed files or newly in use/created:
   itOverleafGithub.aux
+  output.aux
   output.out
   output.toc
 
