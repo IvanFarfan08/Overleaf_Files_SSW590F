@@ -208,13 +208,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now compiles-export-push.service
 \end{minted}
 
-\subsection*{Service Status}
-
-\begin{minted}{bash}
-root@Overleafdp:~/overleaf_exports# sudo systemctl status compiles-export-push.service --no-pager
-● compiles-export-push.service - Export changed Overleaf compiles subfolders to root-owned repo and push
-     Loaded: loaded (/etc/systemd/system/compiles-export-push.service; enabled; preset: enabled)
-     Active: active (running)
-\end{minted}
-
-The service shows as active and correctly pushes changes from the Overleaf compile directories to GitHub whenever a new project is compiled. The repo is available at \hyperref[https://github.com/IvanFarfan08/Overleaf_Files_SSW590F]{}
+The service shows as active and correctly pushes changes from the Overleaf compile directories to GitHub whenever a new project is compiled. The repo is available \hyperref[https://github.com/IvanFarfan08/Overleaf_Files_SSW590F]{here}
