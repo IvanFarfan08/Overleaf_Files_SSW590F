@@ -10,7 +10,6 @@ For this assignment, we performed the following tasks: getting a domain via the 
 \section{Domain Name}
 We decided to register the domain \texttt{ssw590f25.me} using the GitHub Student Developer Pack, which provided a free one-year domain through Namecheap. This allowed us to set up a professional web address for our project with minimal cost and effort. We had to add an A record using the Overleaf \hyperref[Chapter::Hosts]{container droplet IP} as host so that all traffic to the domain gets redirected to the local version of overleaf we're hosting.
 
-\section{SSL Certificate}
 \section{SSL Configuration}
 
 To enable HTTPS on our Overleaf container, we installed and configured SSL certificates from Let’s Encrypt using \texttt{certbot}. This ensures secure encrypted communication between users and the server.
@@ -44,3 +43,23 @@ server {
 \end{minted}
 
 Configuring Nginx in this way is crucial because it acts as a reverse proxy—managing secure HTTPS traffic, terminating SSL connections, and forwarding requests to the internal Overleaf container. 
+
+\section{Configuring LaTeX Packages in Overleaf (Container)}
+
+To ensure our Overleaf container can compile \emph{any} project (including those requiring uncommon packages), we installed the full TeX Live scheme inside the running container.
+
+\subsection*{Steps}
+
+\paragraph{1) Update \texttt{tlmgr} (TeX Live Manager).}
+\begin{minted}{bash}
+# Replace 'sharelatex' with your container name if different
+docker exec sharelatex tlmgr update --self
+\end{minted}
+\emph{Why:} Brings the package manager itself up-to-date so subsequent installs use the latest metadata.
+
+\paragraph{2) Install the full TeX Live package set.}
+\begin{minted}{bash}
+docker exec sharelatex tlmgr install scheme-full
+\end{minted}
+\emph{Why:} \texttt{scheme-full} pulls essentially all TeX Live packages, covering most class/style/font dependencies you’ll encounter.
+\textbf{Note:} This takes a long time and uses many GB of disk space.

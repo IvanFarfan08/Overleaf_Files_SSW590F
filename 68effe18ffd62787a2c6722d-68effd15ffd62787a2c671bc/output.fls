@@ -697,6 +697,10 @@ OUTPUT itOverleafGithub.aux
 INPUT ./itOverleafGithub.tex
 INPUT ./itOverleafGithub.tex
 INPUT itOverleafGithub.tex
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/txbtt.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/vf/public/txfonts/txi.vf
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxptmri.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/txfonts/rtxi.tfm
 INPUT ./output.bbl
 INPUT ./output.bbl
 INPUT output.bbl
@@ -744,6 +748,7 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/rtxb.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/rtxr.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/tcxtt.pfb
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/txbtt.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/txsy.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/txfonts/txtt.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb

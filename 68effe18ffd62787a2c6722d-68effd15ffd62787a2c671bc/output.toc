@@ -45,6 +45,8 @@
 \contentsline {chapter}{\numberline {10}Overleaf and Github Integration \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{28}{chapter.10}%
 \contentsline {section}{\numberline {10.1}Overview}{28}{section.10.1}%
 \contentsline {section}{\numberline {10.2}Domain Name}{28}{section.10.2}%
-\contentsline {section}{\numberline {10.3}SSL Certificate}{28}{section.10.3}%
-\contentsline {section}{\numberline {10.4}SSL Configuration}{28}{section.10.4}%
-\contentsline {chapter}{Bibliography}{31}{chapter*.18}%
+\contentsline {section}{\numberline {10.3}SSL Configuration}{28}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Configuring LaTeX Packages in Overleaf (Container)}{29}{section.10.4}%
+\contentsline {paragraph}{1) Update \texttt {tlmgr} (TeX Live Manager).}{29}{section*.19}%
+\contentsline {paragraph}{2) Install the full TeX Live package set.}{29}{section*.20}%
+\contentsline {chapter}{Bibliography}{31}{chapter*.21}%
