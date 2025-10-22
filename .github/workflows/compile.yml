@@ -16,20 +16,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Detect changed Overleaf folder from last commit
+      - name: Detect folder containing output.tex
         id: detect
         run: |
-          latest=$(git diff-tree --no-commit-id --name-only -r HEAD | head -n 1 | cut -d'/' -f1)
-          echo "Detected folder from last commit: $latest"
+          latest=$(find . -type f -name "output.tex" -printf '%h\n' | sort | tail -n 1)
+          latest="${latest#./}"
+          if [ -z "$latest" ]; then
+            echo "❌ Could not find any folder with output.tex"
+            exit 1
+          fi
+          echo "Detected Overleaf folder: $latest"
           echo "LATEST_PROJECT=$latest" >> $GITHUB_ENV
 
-      - name: Verify folder and list contents
+      - name: List detected folder contents
         run: |
-          echo "Checking folder: ${{ env.LATEST_PROJECT }}"
-          ls -lah ${{ env.LATEST_PROJECT }} || echo "⚠️ Folder not found"
+          echo "Listing contents of ${{ env.LATEST_PROJECT }}"
+          ls -lah "${{ env.LATEST_PROJECT }}"
 
       - name: Set version info
-        id: version
         run: |
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H-%M-%SZ')" >> $GITHUB_ENV
@@ -48,7 +52,7 @@ jobs:
         run: |
           mkdir -p builds
           cp "${{ env.LATEST_PROJECT }}/output.pdf" "builds/manual-${{ env.SHORT_SHA }}.pdf"
-          echo "Saved builds/manual-${{ env.SHORT_SHA }}.pdf"
+          echo "✅ Saved builds/manual-${{ env.SHORT_SHA }}.pdf"
 
       - name: Commit and push PDF
         run: |
