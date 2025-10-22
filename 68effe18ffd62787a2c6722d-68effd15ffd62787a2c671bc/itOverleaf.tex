@@ -1,0 +1,136 @@
+\chapter{Overleaf \\
+\small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
+\index{Overleaf} 
+\index{Chapter::Overleaf}
+\label{Chapter::Overleaf}
+
+\section{Overview}
+For this part of the assignment, Overleaf, a collaborative LaTeX writing platform, was deployed on a DigitalOcean Droplet using Docker containers. The setup required installing Docker and the Docker Compose plugin, verifying the Docker service, and configuring the Overleaf Toolkit container. This approach allowed Overleaf to run directly on port 80, making it accessible through the droplet’s public IP.
+
+\noindent
+The Overleaf Toolkit used was obtained from the official GitHub repository:
+
+\begin{center}
+\url{https://github.com/overleaf/toolkit}
+\end{center}
+
+\section{Configuration Steps}
+\subsection{Droplet Setup}
+\begin{itemize}
+    \item A new DigitalOcean Droplet was created running \texttt{Ubuntu 25.04}.
+    \item Docker was installed using the following command:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+sudo apt install docker.io
+\end{minted}
+
+    \item Enabled Docker to automatically start on boot:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+sudo systemctl enable docker
+\end{minted}
+\end{itemize}
+
+\subsection{Docker Compose Plugin Installation}
+\begin{itemize}
+    \item Installed required certificates and tools, then added Docker’s official GPG key:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+\end{minted}
+
+    \item Added Docker’s repository to the Apt sources:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+  https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+\end{minted}
+
+    \item Installed Docker Engine, CLI, and Compose plugin:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+sudo apt-get install docker-ce docker-ce-cli containerd.io \
+docker-buildx-plugin docker-compose-plugin
+\end{minted}
+\end{itemize}
+
+\subsection{Verifying Docker Status}
+\begin{itemize}
+    \item Checked that Docker was active and running:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+sudo systemctl status docker
+\end{minted}
+
+    \item The response confirmed a successful installation:
+\begin{minted}[fontsize=\small,breaklines]{text}
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled)
+     Active: active (running) since Wed 2025-10-08 19:22:46 UTC
+     Main PID: 55151 (dockerd)
+     Tasks: 8
+     Memory: 43.1M
+     CPU: 627ms
+\end{minted}
+\end{itemize}
+
+\section{Overleaf Toolkit Installation}
+\subsection{Preparing the Environment}
+\begin{itemize}
+    \item Created a directory to hold the container environment:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+mkdir Overleaf_container
+cd Overleaf_container
+\end{minted}
+
+    \item Cloned the official Overleaf Toolkit repository:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+git clone https://github.com/overleaf/toolkit.git
+cd toolkit
+\end{minted}
+\end{itemize}
+
+\subsection{Configuration}
+\begin{itemize}
+    \item Initialized the configuration files:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+bin/init
+\end{minted}
+
+    \item Edited the Overleaf configuration to listen on all network interfaces:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+nano config/overleaf.rc
+\end{minted}
+
+    \item Updated the following line to allow access from the droplet’s public IP:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+OVERLEAF_LISTEN_IP=0.0.0.0
+\end{minted}
+\end{itemize}
+
+\section{Starting Overleaf}
+\begin{itemize}
+    \item Launched the Overleaf container stack using the toolkit command:
+\begin{minted}[fontsize=\small,breaklines]{bash}
+bin/up
+\end{minted}
+
+    \item This downloaded all required images (MongoDB, Redis, and the Overleaf web app) and automatically started the containers.
+    \item Once setup completed, Overleaf was accessible on port 80 of the droplet.
+\end{itemize}
+
+\section{Result}
+After installation, Overleaf successfully deployed and became accessible through the droplet’s public IP address. All Docker services were active, and the platform functioned correctly for collaborative LaTeX editing.
+
+\section{Container Web Access}
+To verify that the Overleaf container was successfully deployed and reachable via the assigned port, the application was accessed through the droplet’s public IP address using a web browser. The interface loaded correctly on port 80, confirming that the Docker service and network configuration were functioning as expected.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{png/overleaf.png}
+    \caption{Overleaf web interface accessible through port 80 on the droplet.}
+    \label{fig:overleaf-port}
+\end{figure}
+
