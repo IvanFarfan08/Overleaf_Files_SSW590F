@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'builds/**'          # avoid infinite loop
+      - 'builds/**'
       - '.github/**'
 
 jobs:
@@ -16,24 +16,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Detect latest Overleaf project folder
+        id: detect
+        run: |
+          latest=$(ls -td -- */ | head -n 1 | tr -d '/')
+          echo "LATEST_PROJECT=$latest" >> $GITHUB_ENV
+          echo "Detected latest Overleaf project folder: $latest"
+
       - name: Set version info
         id: version
         run: |
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H-%M-%SZ')" >> $GITHUB_ENV
           echo "\\newcommand{\\Version}{${{ env.SHORT_SHA }}-${{ env.BUILD_DATE }}}" > version.tex
+          mv version.tex "${{ env.LATEST_PROJECT }}/version.tex"
 
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
           root_file: output.tex
+          working_directory: ${{ env.LATEST_PROJECT }}
           work_in_root_file_dir: true
           args: -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape
 
       - name: Archive compiled PDF
         run: |
           mkdir -p builds
-          cp output.pdf builds/manual-${{ env.SHORT_SHA }}.pdf
+          cp "${{ env.LATEST_PROJECT }}/output.pdf" "builds/manual-${{ env.SHORT_SHA }}.pdf"
           echo "Saved builds/manual-${{ env.SHORT_SHA }}.pdf"
 
       - name: Commit and push PDF
