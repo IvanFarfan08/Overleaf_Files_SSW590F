@@ -2,7 +2,8 @@
 % dmuresan@stevens.edu
 % Edit and adjust as needed.
 \documentclass[12pt]{cornell}
-\input{version}
+\IfFileExists{version.tex}{\input{version}}{\newcommand{\Version}{DEV}}
+
 
 % add index support
 %\usepackage{imakeidx}
