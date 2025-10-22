@@ -16,12 +16,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Detect latest Overleaf project folder
+      - name: Detect changed Overleaf folder from last commit
         id: detect
         run: |
-          latest=$(ls -td -- */ | head -n 1 | tr -d '/')
+          latest=$(git diff-tree --no-commit-id --name-only -r HEAD | head -n 1 | cut -d'/' -f1)
+          echo "Detected folder from last commit: $latest"
           echo "LATEST_PROJECT=$latest" >> $GITHUB_ENV
-          echo "Detected latest Overleaf project folder: $latest"
+
+      - name: Verify folder and list contents
+        run: |
+          echo "Checking folder: ${{ env.LATEST_PROJECT }}"
+          ls -lah ${{ env.LATEST_PROJECT }} || echo "⚠️ Folder not found"
 
       - name: Set version info
         id: version
