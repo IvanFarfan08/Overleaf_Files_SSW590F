@@ -14,6 +14,11 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/size12.clo
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
+INPUT ./version.tex
+INPUT ./version.tex
+INPUT ./version.tex
+INPUT ./version.tex
+INPUT version.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/makeidx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/makeidx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics/color.sty
