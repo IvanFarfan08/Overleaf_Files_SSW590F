@@ -3,5 +3,6 @@
 *.log
 *.out
 *.synctex.gz
+version.tex
 # uncomment if you DON'T want PDFs in git:
 #*.pdf

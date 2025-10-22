@@ -22,7 +22,19 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check if triggered by workflow commit
+        id: check_commit
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if [[ "$COMMIT_MSG" == "Add compiled PDF for"* ]]; then
+            echo "Skipping: This commit was created by the workflow"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Detect folder containing output.tex
+        if: steps.check_commit.outputs.skip != 'true'
         id: detect
         run: |
           latest=$(find . -type f -name "output.tex" -printf '%h\n' | sort | tail -n 1)
@@ -35,11 +47,13 @@ jobs:
           echo "LATEST_PROJECT=$latest" >> $GITHUB_ENV
 
       - name: List detected folder contents
+        if: steps.check_commit.outputs.skip != 'true'
         run: |
           echo "Listing contents of ${{ env.LATEST_PROJECT }}"
           ls -lah "${{ env.LATEST_PROJECT }}"
 
       - name: Generate version.tex
+        if: steps.check_commit.outputs.skip != 'true'
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
           BUILD_DATE=$(date -u +'%Y-%m-%dT%H-%M-%SZ')
@@ -51,18 +65,21 @@ jobs:
           echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
 
       - name: Compile LaTeX document (skip bibtex)
+        if: steps.check_commit.outputs.skip != 'true'
         run: |
           cd "${{ env.LATEST_PROJECT }}"
           echo "Compiling output.tex in $(pwd)"
           latexmk -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape -bibtex- --quiet output.tex || true
 
       - name: Archive compiled PDF
+        if: steps.check_commit.outputs.skip != 'true'
         run: |
           mkdir -p builds
           cp "${{ env.LATEST_PROJECT }}/output.pdf" "builds/manual-${{ env.SHORT_SHA }}.pdf"
           echo "Saved builds/manual-${{ env.SHORT_SHA }}.pdf"
 
       - name: Commit and push PDF
+        if: steps.check_commit.outputs.skip != 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
