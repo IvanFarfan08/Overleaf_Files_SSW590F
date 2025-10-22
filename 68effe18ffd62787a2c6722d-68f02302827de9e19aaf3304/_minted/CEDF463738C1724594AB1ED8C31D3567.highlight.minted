@@ -1,3 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-sudo\PYG{+w}{ }systemctl\PYG{+w}{ }status\PYG{+w}{ }docker
-\end{MintedVerbatim}

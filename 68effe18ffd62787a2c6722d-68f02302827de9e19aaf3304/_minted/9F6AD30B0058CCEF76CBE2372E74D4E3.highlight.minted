@@ -1,8 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-\PYG{n+nv}{SRC}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}/root/Overleaf\PYGZus{}container/toolkit/data/overleaf/data/compiles\PYGZdq{}}
-\PYG{n+nv}{DST}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}/root/overleaf\PYGZus{}exports\PYGZdq{}}
-\PYG{n+nv}{REMOTE}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}git@github.com:IvanFarfan08/Overleaf\PYGZus{}Files\PYGZus{}SSW590F.git\PYGZdq{}}
-
-sudo\PYG{+w}{ }apt\PYG{+w}{ }update
-sudo\PYG{+w}{ }apt\PYG{+w}{ }install\PYG{+w}{ }\PYGZhy{}y\PYG{+w}{ }git\PYG{+w}{ }inotify\PYGZhy{}tools\PYG{+w}{ }rsync
-\end{MintedVerbatim}

@@ -1,3 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-docker\PYG{+w}{ }\PYG{n+nb}{exec}\PYG{+w}{ }sharelatex\PYG{+w}{ }tlmgr\PYG{+w}{ }install\PYG{+w}{ }scheme\PYGZhy{}full
-\end{MintedVerbatim}

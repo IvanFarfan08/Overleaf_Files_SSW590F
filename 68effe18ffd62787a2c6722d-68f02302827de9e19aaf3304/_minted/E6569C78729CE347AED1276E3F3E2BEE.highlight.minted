@@ -1,4 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-git\PYG{+w}{ }clone\PYG{+w}{ }https://github.com/overleaf/toolkit.git
-\PYG{n+nb}{cd}\PYG{+w}{ }toolkit
-\end{MintedVerbatim}

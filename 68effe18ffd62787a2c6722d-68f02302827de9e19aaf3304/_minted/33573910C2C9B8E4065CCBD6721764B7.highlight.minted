@@ -1,4 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-mkdir\PYG{+w}{ }Overleaf\PYGZus{}container
-\PYG{n+nb}{cd}\PYG{+w}{ }Overleaf\PYGZus{}container
-\end{MintedVerbatim}
