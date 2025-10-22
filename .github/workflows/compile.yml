@@ -1,4 +1,4 @@
-name: Compile Overleaf PDF
+name: Version and Archive Overleaf PDF
 
 on:
   push:
@@ -13,12 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up LaTeX
-      uses: xu-cheng/latex-action@v3
-      with:
-        root_file: manual.tex
-
-    - name: Update version.tex
+    - name: Determine version number
       id: version
       run: |
         VERSION_NUM=$(git rev-list --count HEAD)
@@ -29,16 +24,33 @@ jobs:
         git commit -m "bump version to $VERSION_NUM" || echo "no version change"
         echo "version=$VERSION_NUM" >> $GITHUB_ENV
 
-    - name: Upload PDF artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Overleaf_PDF_V${{ env.version }}
-        path: manual.pdf
+    - name: Find newest Overleaf export folder
+      id: locate
+      run: |
+        LATEST_FOLDER=$(find . -maxdepth 1 -type d -regex './[0-9a-f]\{24\}-[0-9a-f]\{24\}' | xargs ls -td | head -n1)
+        echo "Found latest folder: $LATEST_FOLDER"
+        echo "folder=$LATEST_FOLDER" >> $GITHUB_ENV
 
-    - name: Commit compiled PDF back to repo
+    - name: Copy and version output.pdf
       run: |
         mkdir -p builds
-        cp manual.pdf builds/manual_v${{ env.version }}.pdf
+        PDF_PATH="${{ env.folder }}/output.pdf"
+        if [ -f "$PDF_PATH" ]; then
+          cp "$PDF_PATH" "builds/overleaf_v${{ env.version }}.pdf"
+          echo "Copied PDF from $PDF_PATH"
+        else
+          echo "ERROR: No output.pdf found in $PDF_PATH"
+          exit 1
+        fi
+
+    - name: Upload versioned PDF as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Overleaf_PDF_v${{ env.version }}
+        path: builds/overleaf_v${{ env.version }}.pdf
+
+    - name: Commit versioned PDF
+      run: |
         git add builds/
-        git commit -m "add compiled PDF version ${{ env.version }}" || echo "no new pdf"
+        git commit -m "add overleaf PDF version ${{ env.version }}" || echo "no new pdf"
         git push
