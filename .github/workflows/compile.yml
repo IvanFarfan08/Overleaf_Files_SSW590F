@@ -40,14 +40,11 @@ jobs:
           echo "\\newcommand{\\Version}{${{ env.SHORT_SHA }}-${{ env.BUILD_DATE }}}" > version.tex
           mv version.tex "${{ env.LATEST_PROJECT }}/version.tex"
 
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: output.tex
-          working_directory: ${{ env.LATEST_PROJECT }}
-          work_in_root_file_dir: true
-          continue_on_error: true
-          args: -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape
+      - name: Compile LaTeX document (skip bibtex)
+        run: |
+          cd "${{ env.LATEST_PROJECT }}"
+          echo "🧩 Compiling output.tex in $(pwd)"
+          latexmk -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape -bibtex- --quiet output.tex || true
 
       - name: Archive compiled PDF
         run: |
