@@ -660,3 +660,14 @@ INPUT ./png/latexdocker.png
 INPUT ./png/latexdocker.png
 INPUT ./png/latexdocker.png
 INPUT ./png/latexdocker.png
+INPUT ./itBugzilla.tex
+INPUT ./itBugzilla.tex
+OUTPUT itBugzilla.aux
+INPUT ./itBugzilla.tex
+INPUT ./itBugzilla.tex
+INPUT itBugzilla.tex
+INPUT ./png/bugzilla.png
+INPUT ./png/bugzilla.png
+INPUT ./png/bugzilla.png
+INPUT ./png/bugzilla.png
+INPUT ./png/bugzilla.png
