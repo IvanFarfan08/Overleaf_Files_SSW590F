@@ -1,0 +1,45 @@
+name: Version and Archive Overleaf PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'builds/**'          # avoid infinite loop
+      - '.github/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set version info
+        id: version
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H-%M-%SZ')" >> $GITHUB_ENV
+          echo "\\newcommand{\\Version}{${{ env.SHORT_SHA }}-${{ env.BUILD_DATE }}}" > version.tex
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: output.tex
+          work_in_root_file_dir: true
+          args: -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape
+
+      - name: Archive compiled PDF
+        run: |
+          mkdir -p builds
+          cp output.pdf builds/manual-${{ env.SHORT_SHA }}.pdf
+          echo "Saved builds/manual-${{ env.SHORT_SHA }}.pdf"
+
+      - name: Commit and push PDF
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "actions@github.com"
+          git add builds/
+          git commit -m "Add compiled PDF for ${{ env.SHORT_SHA }}" || echo "No changes to commit"
+          git push
