@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+aws\PYG{+w}{ }apprunner\PYG{+w}{ }list\PYGZhy{}services\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}region\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{n+nv}{\PYGZdl{}AWS\PYGZus{}REGION}\PYG{l+s+s2}{\PYGZdq{}}\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}query\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{ServiceSummaryList[?ServiceName==\PYGZsq{}}\PYG{n+nv}{\PYGZdl{}APP\PYGZus{}NAME}\PYG{l+s+s2}{\PYGZsq{}].ServiceUrl}\PYG{l+s+s2}{\PYGZdq{}}\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+\PYG{+w}{  }\PYGZhy{}\PYGZhy{}output\PYG{+w}{ }text
+\end{MintedVerbatim}

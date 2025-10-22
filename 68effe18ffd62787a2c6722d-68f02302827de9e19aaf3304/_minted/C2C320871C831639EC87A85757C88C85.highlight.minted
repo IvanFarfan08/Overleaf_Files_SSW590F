@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+ssh\PYGZhy{}keygen\PYG{+w}{ }\PYGZhy{}t\PYG{+w}{ }ed25519\PYG{+w}{ }\PYGZhy{}f\PYG{+w}{ }/root/.ssh/id\PYGZus{}ed25519\PYGZus{}exports\PYG{+w}{ }\PYGZhy{}N\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{+w}{ }\PYGZhy{}C\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}overleaf\PYGZhy{}exports\PYGZdq{}}
+ssh\PYGZhy{}keyscan\PYG{+w}{ }github.com\PYG{+w}{ }\PYGZgt{}\PYGZgt{}\PYG{+w}{ }/root/.ssh/known\PYGZus{}hosts
+chmod\PYG{+w}{ }\PYG{l+m}{600}\PYG{+w}{ }/root/.ssh/known\PYGZus{}hosts
+cat\PYG{+w}{ }/root/.ssh/id\PYGZus{}ed25519\PYGZus{}exports.pub
+ssh\PYG{+w}{ }\PYGZhy{}i\PYG{+w}{ }/root/.ssh/id\PYGZus{}ed25519\PYGZus{}exports\PYG{+w}{ }\PYGZhy{}T\PYG{+w}{ }git@github.com
+\end{MintedVerbatim}

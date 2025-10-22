@@ -1,0 +1,13 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Build the Docker image}
+docker\PYG{+w}{ }build\PYG{+w}{ }\PYGZhy{}t\PYG{+w}{ }latex\PYGZhy{}docker\PYG{+w}{ }.
+
+\PYG{c+c1}{\PYGZsh{} Run the container (Linux/macOS)}
+docker\PYG{+w}{ }run\PYG{+w}{ }\PYGZhy{}\PYGZhy{}rm\PYG{+w}{ }\PYGZhy{}v\PYG{+w}{ }\PYG{k}{\PYGZdl{}(}\PYG{n+nb}{pwd}\PYG{k}{)}:/data\PYG{+w}{ }latex\PYGZhy{}docker
+
+\PYG{c+c1}{\PYGZsh{} Run the container (Windows PowerShell)}
+docker\PYG{+w}{ }run\PYG{+w}{ }\PYGZhy{}\PYGZhy{}rm\PYG{+w}{ }\PYGZhy{}v\PYG{+w}{ }\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nv}{PWD}\PYG{l+s+si}{\PYGZcb{}}:/data\PYG{+w}{ }latex\PYGZhy{}docker
+
+\PYG{c+c1}{\PYGZsh{} Run the container (Windows CMD)}
+docker\PYG{+w}{ }run\PYG{+w}{ }\PYGZhy{}\PYGZhy{}rm\PYG{+w}{ }\PYGZhy{}v\PYG{+w}{ }\PYGZpc{}cd\PYGZpc{}:/data\PYG{+w}{ }latex\PYGZhy{}docker
+\end{MintedVerbatim}

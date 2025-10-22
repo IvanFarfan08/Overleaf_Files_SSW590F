@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+sudo\PYG{+w}{ }apt\PYGZhy{}get\PYG{+w}{ }install\PYG{+w}{ }docker\PYGZhy{}ce\PYG{+w}{ }docker\PYGZhy{}ce\PYGZhy{}cli\PYG{+w}{ }containerd.io\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}}
+docker\PYGZhy{}buildx\PYGZhy{}plugin\PYG{+w}{ }docker\PYGZhy{}compose\PYGZhy{}plugin
+\end{MintedVerbatim}

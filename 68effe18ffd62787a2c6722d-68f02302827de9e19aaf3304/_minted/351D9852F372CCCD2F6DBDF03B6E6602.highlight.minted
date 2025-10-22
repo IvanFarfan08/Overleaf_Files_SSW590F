@@ -1,0 +1,20 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{server}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kn}{listen}\PYG{+w}{ }\PYG{l+m+mi}{80}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kn}{server\PYGZus{}name}\PYG{+w}{ }\PYG{l+s}{overleaf.ssw590f25.me}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kn}{return}\PYG{+w}{ }\PYG{l+m+mi}{301}\PYG{+w}{ }\PYG{l+s}{https://}\PYG{n+nv}{\PYGZdl{}server\PYGZus{}name\PYGZdl{}request\PYGZus{}uri}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k}{server}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kn}{listen}\PYG{+w}{ }\PYG{l+m+mi}{443}\PYG{+w}{ }\PYG{l+s}{ssl}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kn}{server\PYGZus{}name}\PYG{+w}{ }\PYG{l+s}{overleaf.ssw590f25.me}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kn}{ssl\PYGZus{}certificate}\PYG{+w}{ }\PYG{l+s}{/etc/letsencrypt/live/overleaf.ssw590f25.me/fullchain.pem}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kn}{ssl\PYGZus{}certificate\PYGZus{}key}\PYG{+w}{ }\PYG{l+s}{/etc/letsencrypt/live/overleaf.ssw590f25.me/privkey.pem}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kn}{location}\PYG{+w}{ }\PYG{l+s}{/}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k+kn}{proxy\PYGZus{}pass}\PYG{+w}{ }\PYG{l+s}{http://localhost:8877}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k+kn}{proxy\PYGZus{}set\PYGZus{}header}\PYG{+w}{ }\PYG{l+s}{X\PYGZhy{}Forwarded\PYGZhy{}For}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}remote\PYGZus{}addr}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

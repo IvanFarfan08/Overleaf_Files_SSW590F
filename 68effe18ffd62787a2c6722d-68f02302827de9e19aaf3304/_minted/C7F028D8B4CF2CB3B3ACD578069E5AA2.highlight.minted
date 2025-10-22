@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+apt\PYG{+w}{ }install\PYG{+w}{ }python3\PYGZhy{}certbot\PYGZhy{}nginx\PYG{+w}{ }nginx
+sudo\PYG{+w}{ }certbot\PYG{+w}{ }\PYGZhy{}\PYGZhy{}nginx\PYG{+w}{ }certonly
+\end{MintedVerbatim}

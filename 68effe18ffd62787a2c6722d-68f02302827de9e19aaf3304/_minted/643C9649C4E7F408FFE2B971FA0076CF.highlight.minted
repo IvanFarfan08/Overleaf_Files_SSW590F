@@ -1,0 +1,21 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+sudo\PYG{+w}{ }tee\PYG{+w}{ }/etc/systemd/system/compiles\PYGZhy{}export\PYGZhy{}push.service\PYG{+w}{ }\PYGZgt{}/dev/null\PYG{+w}{ }\PYG{l+s}{\PYGZlt{}\PYGZlt{}\PYGZsq{}EOF\PYGZsq{}}
+\PYG{l+s}{[Unit]}
+\PYG{l+s}{Description=Export changed Overleaf compiles subfolders to root\PYGZhy{}owned repo and push}
+\PYG{l+s}{After=network\PYGZhy{}online.target}
+\PYG{l+s}{Wants=network\PYGZhy{}online.target}
+
+\PYG{l+s}{[Service]}
+\PYG{l+s}{Type=simple}
+\PYG{l+s}{User=root}
+\PYG{l+s}{ExecStart=/usr/local/bin/compiles\PYGZhy{}export\PYGZhy{}push.sh}
+\PYG{l+s}{Restart=always}
+\PYG{l+s}{RestartSec=2}
+
+\PYG{l+s}{[Install]}
+\PYG{l+s}{WantedBy=multi\PYGZhy{}user.target}
+\PYG{l+s}{EOF}
+
+sudo\PYG{+w}{ }systemctl\PYG{+w}{ }daemon\PYGZhy{}reload
+sudo\PYG{+w}{ }systemctl\PYG{+w}{ }\PYG{n+nb}{enable}\PYG{+w}{ }\PYGZhy{}\PYGZhy{}now\PYG{+w}{ }compiles\PYGZhy{}export\PYGZhy{}push.service
+\end{MintedVerbatim}

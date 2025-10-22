@@ -1,0 +1,49 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+sudo\PYG{+w}{ }tee\PYG{+w}{ }/usr/local/bin/compiles\PYGZhy{}export\PYGZhy{}push.sh\PYG{+w}{ }\PYGZgt{}/dev/null\PYG{+w}{ }\PYG{l+s}{\PYGZlt{}\PYGZlt{}\PYGZsq{}EOF\PYGZsq{}}
+\PYG{l+s}{\PYGZsh{}!/usr/bin/env bash}
+\PYG{l+s}{set \PYGZhy{}euo pipefail}
+
+\PYG{l+s}{SRC=\PYGZdq{}/root/Overleaf\PYGZus{}container/toolkit/data/overleaf/data/compiles\PYGZdq{}}
+\PYG{l+s}{DST=\PYGZdq{}/root/overleaf\PYGZus{}exports\PYGZdq{}}
+\PYG{l+s}{BRANCH=\PYGZdq{}main\PYGZdq{}}
+\PYG{l+s}{KEY=\PYGZdq{}/root/.ssh/id\PYGZus{}ed25519\PYGZus{}exports\PYGZdq{}}
+
+\PYG{l+s}{export GIT\PYGZus{}SSH\PYGZus{}COMMAND=\PYGZdq{}ssh \PYGZhy{}i \PYGZdl{}KEY \PYGZhy{}o StrictHostKeyChecking=yes\PYGZdq{}}
+
+\PYG{l+s}{mkdir \PYGZhy{}p \PYGZdq{}\PYGZdl{}DST\PYGZdq{}}
+
+\PYG{l+s}{copy\PYGZus{}and\PYGZus{}commit() \PYGZob{}}
+\PYG{l+s}{  local top=\PYGZdq{}\PYGZdl{}1\PYGZdq{}}
+\PYG{l+s}{  rsync \PYGZhy{}a \PYGZhy{}\PYGZhy{}delete \PYGZdq{}\PYGZdl{}SRC/\PYGZdl{}top/\PYGZdq{} \PYGZdq{}\PYGZdl{}DST/\PYGZdl{}top/\PYGZdq{}}
+\PYG{l+s}{  cd \PYGZdq{}\PYGZdl{}DST\PYGZdq{}}
+\PYG{l+s}{  git add \PYGZdq{}\PYGZdl{}top\PYGZdq{}}
+\PYG{l+s}{  if ! git diff \PYGZhy{}\PYGZhy{}cached \PYGZhy{}\PYGZhy{}quiet; then}
+\PYG{l+s}{    msg=\PYGZdq{}export: \PYGZdl{}top @ \PYGZdl{}(date \PYGZhy{}u +\PYGZsq{}\PYGZpc{}Y\PYGZhy{}\PYGZpc{}m\PYGZhy{}\PYGZpc{}d \PYGZpc{}H:\PYGZpc{}M:\PYGZpc{}S \PYGZpc{}Z\PYGZsq{})\PYGZdq{}}
+\PYG{l+s}{    git commit \PYGZhy{}m \PYGZdq{}\PYGZdl{}msg\PYGZdq{}}
+\PYG{l+s}{    git push origin \PYGZdq{}\PYGZdl{}BRANCH\PYGZdq{}}
+\PYG{l+s}{    echo \PYGZdq{}Pushed: \PYGZdl{}msg\PYGZdq{}}
+\PYG{l+s}{  fi}
+\PYG{l+s}{\PYGZcb{}}
+
+\PYG{l+s}{DEBOUNCE=5}
+\PYG{l+s}{declare \PYGZhy{}A last\PYGZus{}at}
+
+\PYG{l+s}{inotifywait \PYGZhy{}m \PYGZhy{}r \PYGZbs{}}
+\PYG{l+s}{  \PYGZhy{}e close\PYGZus{}write,modify,attrib,create,delete,move \PYGZbs{}}
+\PYG{l+s}{  \PYGZhy{}\PYGZhy{}format \PYGZsq{}\PYGZpc{}w\PYGZpc{}f\PYGZsq{} \PYGZdq{}\PYGZdl{}SRC\PYGZdq{} | while read \PYGZhy{}r path; do}
+\PYG{l+s}{    rel=\PYGZdq{}\PYGZdl{}\PYGZob{}path\PYGZsh{}\PYGZdq{}\PYGZdl{}SRC/\PYGZdq{}\PYGZcb{}\PYGZdq{}}
+\PYG{l+s}{    top=\PYGZdq{}\PYGZdl{}\PYGZob{}rel\PYGZpc{}\PYGZpc{}/*\PYGZcb{}\PYGZdq{}}
+\PYG{l+s}{    [ \PYGZhy{}n \PYGZdq{}\PYGZdl{}top\PYGZdq{} ] || continue}
+
+\PYG{l+s}{    now=\PYGZdl{}(date +\PYGZpc{}s)}
+\PYG{l+s}{    last=\PYGZdl{}\PYGZob{}last\PYGZus{}at[\PYGZdl{}top]:\PYGZhy{}0\PYGZcb{}}
+\PYG{l+s}{    if (( now \PYGZhy{} last \PYGZgt{}= DEBOUNCE )); then}
+\PYG{l+s}{      last\PYGZus{}at[\PYGZdl{}top]=\PYGZdl{}now}
+\PYG{l+s}{      echo \PYGZdq{}Detected change in \PYGZdl{}top\PYGZdq{}}
+\PYG{l+s}{      copy\PYGZus{}and\PYGZus{}commit \PYGZdq{}\PYGZdl{}top\PYGZdq{} || echo \PYGZdq{}Commit/push failed for \PYGZdl{}top\PYGZdq{}}
+\PYG{l+s}{    fi}
+\PYG{l+s}{  done}
+\PYG{l+s}{EOF}
+
+sudo\PYG{+w}{ }chmod\PYG{+w}{ }+x\PYG{+w}{ }/usr/local/bin/compiles\PYGZhy{}export\PYGZhy{}push.sh
+\end{MintedVerbatim}

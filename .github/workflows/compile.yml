@@ -69,13 +69,13 @@ jobs:
         run: |
           cd "${{ env.LATEST_PROJECT }}"
           echo "Compiling output.tex in $(pwd)"
-          latexmk -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape -bibtex- --quiet output.tex || true
+          latexmk -jobname=compile -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape -bibtex- --quiet output.tex || true
 
       - name: Archive compiled PDF
         if: steps.check_commit.outputs.skip != 'true'
         run: |
           mkdir -p builds
-          cp "${{ env.LATEST_PROJECT }}/output.pdf" "builds/manual-${{ env.SHORT_SHA }}.pdf"
+          cp "${{ env.LATEST_PROJECT }}/compile.pdf" "builds/manual-${{ env.SHORT_SHA }}.pdf"
           echo "Saved builds/manual-${{ env.SHORT_SHA }}.pdf"
 
       - name: Commit and push PDF

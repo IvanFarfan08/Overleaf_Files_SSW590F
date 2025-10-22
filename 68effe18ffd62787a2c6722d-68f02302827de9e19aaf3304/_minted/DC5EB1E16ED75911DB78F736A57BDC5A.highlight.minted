@@ -1,0 +1,9 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+● docker.service \PYGZhy{} Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled)
+     Active: active (running) since Wed 2025\PYGZhy{}10\PYGZhy{}08 19:22:46 UTC
+     Main PID: 55151 (dockerd)
+     Tasks: 8
+     Memory: 43.1M
+     CPU: 627ms
+\end{MintedVerbatim}

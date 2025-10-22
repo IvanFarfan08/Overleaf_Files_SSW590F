@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} From the app directory containing Dockerfile (Express + /public)}
+docker\PYG{+w}{ }build\PYG{+w}{ }\PYGZhy{}t\PYG{+w}{ }color\PYGZhy{}buttons\PYGZhy{}app\PYG{+w}{ }.
+docker\PYG{+w}{ }run\PYG{+w}{ }\PYGZhy{}p\PYG{+w}{ }\PYG{l+m}{8080}:3000\PYG{+w}{ }color\PYGZhy{}buttons\PYGZhy{}app
+\PYG{c+c1}{\PYGZsh{} Visit http://localhost:8080}
+\end{MintedVerbatim}
