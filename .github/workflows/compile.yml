@@ -43,6 +43,8 @@ jobs:
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H-%M-%SZ')" >> $GITHUB_ENV
           echo "\\newcommand{\\Version}{${{ env.SHORT_SHA }}-${{ env.BUILD_DATE }}}" > version.tex
+          echo "Generated version.tex:"
+          cat version.tex
           mv version.tex "${{ env.LATEST_PROJECT }}/version.tex"
 
       - name: Compile LaTeX document (skip bibtex)
