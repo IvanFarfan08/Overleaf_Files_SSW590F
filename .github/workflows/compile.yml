@@ -16,7 +16,7 @@ jobs:
     - name: Set up LaTeX
       uses: xu-cheng/latex-action@v3
       with:
-        cache: true
+        root_file: manual.tex
 
     - name: Update version.tex
       id: version
@@ -28,10 +28,6 @@ jobs:
         git add version.tex
         git commit -m "bump version to $VERSION_NUM" || echo "no version change"
         echo "version=$VERSION_NUM" >> $GITHUB_ENV
-
-    - name: Compile LaTeX document
-      run: |
-        latexmk -pdf -interaction=nonstopmode -halt-on-error manual.tex
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v4
