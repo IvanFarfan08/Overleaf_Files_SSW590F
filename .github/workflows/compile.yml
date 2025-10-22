@@ -1,0 +1,48 @@
+name: Compile Overleaf PDF
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up LaTeX
+      uses: xu-cheng/latex-action@v3
+      with:
+        cache: true
+
+    - name: Update version.tex
+      id: version
+      run: |
+        VERSION_NUM=$(git rev-list --count HEAD)
+        echo "\\newcommand{\\Version}{Version $VERSION_NUM}" > version.tex
+        git config user.name "GitHub Action"
+        git config user.email "actions@github.com"
+        git add version.tex
+        git commit -m "bump version to $VERSION_NUM" || echo "no version change"
+        echo "version=$VERSION_NUM" >> $GITHUB_ENV
+
+    - name: Compile LaTeX document
+      run: |
+        latexmk -pdf -interaction=nonstopmode -halt-on-error manual.tex
+
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Overleaf_PDF_V${{ env.version }}
+        path: manual.pdf
+
+    - name: Commit compiled PDF back to repo
+      run: |
+        mkdir -p builds
+        cp manual.pdf builds/manual_v${{ env.version }}.pdf
+        git add builds/
+        git commit -m "add compiled PDF version ${{ env.version }}" || echo "no new pdf"
+        git push
