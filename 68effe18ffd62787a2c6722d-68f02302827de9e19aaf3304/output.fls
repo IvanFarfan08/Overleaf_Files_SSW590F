@@ -671,3 +671,9 @@ INPUT ./png/bugzilla.png
 INPUT ./png/bugzilla.png
 INPUT ./png/bugzilla.png
 INPUT ./png/bugzilla.png
+INPUT ./itOverleaf.tex
+INPUT ./itOverleaf.tex
+OUTPUT itOverleaf.aux
+INPUT ./itOverleaf.tex
+INPUT ./itOverleaf.tex
+INPUT itOverleaf.tex
