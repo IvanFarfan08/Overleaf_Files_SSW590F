@@ -1,20 +1,9 @@
-\chapter{Create a GitHub Action to Automatically Compile your LaTeX Document and Store Versions \\
+\chapter{GitHub Action to compile LaTeX and Store Versions \\
 \small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
 \index{Overleaf GitHub Action}
 \index{Chapter::Overleaf GitHub Action}
 \label{Chapter::Overleaf GitHub Action}
 
-\section{Overview}
-
-This assignment focused on automating the LaTeX compilation workflow by connecting our self-hosted Overleaf instance to GitHub. The goal was to ensure that every change submitted to the repository automatically generated a new compiled PDF version with an embedded version number and timestamp for traceability.
-
-We successfully completed all core requirements:
-\begin{itemize}
-    \item Connected our Overleaf installation to GitHub.
-    \item Configured automatic syncing of compiled project files using a watcher service.
-    \item Implemented a GitHub Action to compile LaTeX documents and embed version metadata.
-    \item Stored the resulting PDFs in a dedicated \texttt{builds/} directory for version tracking.
-\end{itemize}
 
 \section{Connecting Overleaf to GitHub}
 
@@ -46,16 +35,16 @@ Dependencies like \texttt{git}, \texttt{inotify-tools}, and \texttt{rsync} were 
 A custom watcher script (\texttt{/usr/local/bin/compiles-export-push.sh}) was deployed to monitor the Overleaf \texttt{compiles/} directory for changes in \texttt{.tex} files. When triggered, it performs a two-pass \texttt{rsync} and pushes only one commit per updated project.
 
 \begin{itemize}
-    \item **Debounce Mechanism:** Prevents redundant commits during rapid Overleaf recompilations.
-    \item **Single Commit per Folder:** Ensures each Overleaf project folder under \texttt{compiles/} triggers only one export.
-    \item **Systemd Integration:** The watcher runs continuously via \texttt{compiles-export-push.service}, restarting automatically on failure.
+    \item Debounce Mechanism: Prevents redundant commits during rapid Overleaf recompilations.
+    \item Single Commit per Folder: Ensures each Overleaf project folder under \texttt{compiles/} triggers only one export.
+    \item Systemd Integration: The watcher runs continuously via \texttt{compiles-export-push.service}, restarting automatically on failure.
 \end{itemize}
 
 \section{Setting Up the Overleaf Document for Versioning}
 
 Inside our Overleaf project, we configured the LaTeX document to support automated version display.  
 
-\subsection*{Creating the \texttt{version.tex} File}
+\subsection*{Creating the version.tex File}
 
 We began by creating a new file named \texttt{version.tex} in the root of the project. Initially, it contained a placeholder command so the document would compile even before GitHub injected the actual version code:
 
@@ -94,11 +83,11 @@ After the watcher pushes changes, the GitHub Action workflow (\texttt{.github/wo
 
 \subsection*{Workflow Overview}
 \begin{enumerate}
-    \item **Detect Change Source:** Checks if the commit came from the Overleaf export service.
-    \item **Identify Project Folder:** Extracts the folder ID from the commit message.
-    \item **Generate Version Tag:** Creates a \texttt{version.tex} file containing the commit SHA and UTC timestamp.
-    \item **Compile LaTeX Project:** Builds the project using a GitHub-hosted runner.
-    \item **Archive the PDF:** Saves the compiled PDF in the \texttt{builds/} directory using the naming format:
+    \item Detect Change Source: Checks if the commit came from the Overleaf export service.
+    \item Identify Project Folder: Extracts the folder ID from the commit message.
+    \item Generate Version Tag: Creates a \texttt{version.tex} file containing the commit SHA and UTC timestamp.
+    \item Compile LaTeX Project: Builds the project using a GitHub-hosted runner.
+    \item Archive the PDF: Saves the compiled PDF in the \texttt{builds/} directory using the naming format:
     \begin{minted}{text}
     builds/manual-<SHORT_SHA>.pdf
     \end{minted}

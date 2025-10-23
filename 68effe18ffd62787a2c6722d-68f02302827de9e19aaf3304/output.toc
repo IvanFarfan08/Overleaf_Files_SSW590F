@@ -51,11 +51,10 @@
 \contentsline {paragraph}{2) Install the full TeX Live package set.}{30}{section*.20}%
 \contentsline {section}{\numberline {10.5}Connecting Overleaf to GitHub}{30}{section.10.5}%
 \contentsline {section}{\numberline {10.6}Compiling Overleaf Projects from the Command Line}{34}{section.10.6}%
-\contentsline {chapter}{\numberline {11}Create a GitHub Action to Automatically Compile your LaTeX Document and Store Versions \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{35}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Overview}{35}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Connecting Overleaf to GitHub}{35}{section.11.2}%
-\contentsline {section}{\numberline {11.3}Automated Watcher Service}{36}{section.11.3}%
-\contentsline {section}{\numberline {11.4}Setting Up the Overleaf Document for Versioning}{36}{section.11.4}%
-\contentsline {section}{\numberline {11.5}GitHub Action: Automatic Compilation and Versioning}{37}{section.11.5}%
-\contentsline {section}{\numberline {11.6}Results and Verification}{38}{section.11.6}%
-\contentsline {chapter}{Bibliography}{41}{chapter*.34}%
+\contentsline {chapter}{\numberline {11}GitHub Action to compile LaTeX and Store Versions \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{35}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Connecting Overleaf to GitHub}{35}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Automated Watcher Service}{36}{section.11.2}%
+\contentsline {section}{\numberline {11.3}Setting Up the Overleaf Document for Versioning}{36}{section.11.3}%
+\contentsline {section}{\numberline {11.4}GitHub Action: Automatic Compilation and Versioning}{37}{section.11.4}%
+\contentsline {section}{\numberline {11.5}Results and Verification}{38}{section.11.5}%
+\contentsline {chapter}{Bibliography}{40}{chapter*.34}%
