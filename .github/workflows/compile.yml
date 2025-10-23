@@ -40,8 +40,13 @@ jobs:
           COMMIT_MSG=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MSG"
 
-          # Extract folder ID from commit message (content in parentheses)
-          FOLDER_ID=$(echo "$COMMIT_MSG" | sed -n 's/.*(\(.*\)).*/\1/p')
+          # Try format 1: "export: FOLDER_ID @ timestamp"
+          FOLDER_ID=$(echo "$COMMIT_MSG" | sed -n 's/^export: \([^ ]*\) @.*/\1/p')
+
+          # If that fails, try format 2: "overleaf-export: ... (FOLDER_ID)"
+          if [ -z "$FOLDER_ID" ]; then
+            FOLDER_ID=$(echo "$COMMIT_MSG" | sed -n 's/.*(\(.*\)).*/\1/p')
+          fi
 
           if [ -z "$FOLDER_ID" ]; then
             echo "Could not extract folder ID from commit message"
