@@ -33,18 +33,28 @@ jobs:
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Detect folder containing output.tex
+      - name: Extract project folder from commit message
         if: steps.check_commit.outputs.skip != 'true'
         id: detect
         run: |
-          latest=$(find . -type f -name "output.tex" -printf '%h\n' | sort | tail -n 1)
-          latest="${latest#./}"
-          if [ -z "$latest" ]; then
-            echo "Could not find any folder with output.tex"
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MSG"
+
+          # Extract folder ID from commit message (content in parentheses)
+          FOLDER_ID=$(echo "$COMMIT_MSG" | sed -n 's/.*(\(.*\)).*/\1/p')
+
+          if [ -z "$FOLDER_ID" ]; then
+            echo "Could not extract folder ID from commit message"
             exit 1
           fi
-          echo "Detected Overleaf folder: $latest"
-          echo "LATEST_PROJECT=$latest" >> $GITHUB_ENV
+
+          if [ ! -d "$FOLDER_ID" ]; then
+            echo "Folder $FOLDER_ID does not exist"
+            exit 1
+          fi
+
+          echo "Detected Overleaf folder: $FOLDER_ID"
+          echo "LATEST_PROJECT=$FOLDER_ID" >> $GITHUB_ENV
 
       - name: List detected folder contents
         if: steps.check_commit.outputs.skip != 'true'
