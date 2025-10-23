@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1760635671.21191 "main.tex" "output.pdf" "output" 1760635672.17051 0
+["pdflatex"] 1761180136.39852 "main.tex" "output.pdf" "output" 1761180136.92953 0
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -32,8 +32,8 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1760584421 5528139 daf1353d2d3d7fed9df2ebbf1b26218e ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1760584696 3568715 60174bacd181390f3f3d8fb184c1ac8d ""
   "/usr/local/texlive/2025/texmf.cnf" 1747657802 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "main.tex" 1760635671.01842 238 ff527e3d62948fd1cb7ad79da0a65260 ""
-  "output.aux" 1760635671.99943 132 becad25d16353fbd81e5644d2e8bca32 "pdflatex"
+  "main.tex" 1761180136.05903 255 6032c9fc95cd72ae835c8e123a02b897 ""
+  "output.aux" 1761180136.88903 132 becad25d16353fbd81e5644d2e8bca32 "pdflatex"
   (generated)
   "output.aux"
   "output.log"
