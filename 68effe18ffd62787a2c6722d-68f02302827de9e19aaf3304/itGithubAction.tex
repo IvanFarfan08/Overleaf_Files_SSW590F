@@ -1,0 +1,153 @@
+\chapter{Create a GitHub Action to Automatically Compile your LaTeX Document and Store Versions \\
+\small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
+\index{Overleaf GitHub Action}
+\index{Chapter::Overleaf GitHub Action}
+\label{Chapter::Overleaf GitHub Action}
+
+\section{Overview}
+
+This assignment focused on automating the LaTeX compilation workflow by connecting our self-hosted Overleaf instance to GitHub. The goal was to ensure that every change submitted to the repository automatically generated a new compiled PDF version with an embedded version number and timestamp for traceability.
+
+We successfully completed all core requirements:
+\begin{itemize}
+    \item Connected our Overleaf installation to GitHub.
+    \item Configured automatic syncing of compiled project files using a watcher service.
+    \item Implemented a GitHub Action to compile LaTeX documents and embed version metadata.
+    \item Stored the resulting PDFs in a dedicated \texttt{builds/} directory for version tracking.
+\end{itemize}
+
+\section{Connecting Overleaf to GitHub}
+
+We first linked our self-hosted Overleaf instance (\texttt{overleaf.ssw590f25.me}) to GitHub to allow automatic exports of compiled LaTeX projects. The connection uses SSH keys for secure authentication and push access.
+
+\subsection*{Generating and Configuring SSH Keys}
+\begin{minted}{bash}
+ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519_exports -N "" -C "overleaf-exports"
+ssh-keyscan github.com >> /root/.ssh/known_hosts
+chmod 600 /root/.ssh/known_hosts
+cat /root/.ssh/id_ed25519_exports.pub
+\end{minted}
+
+The public key was added as a deployment key on the GitHub repository to grant Overleaf push access. Git was then configured to always use this key when communicating with GitHub.
+
+\subsection*{Export Service Configuration}
+
+We created a dedicated directory to mirror Overleaf’s compiled files and push them to GitHub:
+\begin{minted}{bash}
+SRC="/root/Overleaf_container/toolkit/data/overleaf/data/compiles"
+DST="/root/overleaf_exports"
+REMOTE="git@github.com:IvanFarfan08/Overleaf_Files_SSW590F.git"
+\end{minted}
+
+Dependencies like \texttt{git}, \texttt{inotify-tools}, and \texttt{rsync} were installed to support real-time file synchronization.
+
+\section{Automated Watcher Service}
+
+A custom watcher script (\texttt{/usr/local/bin/compiles-export-push.sh}) was deployed to monitor the Overleaf \texttt{compiles/} directory for changes in \texttt{.tex} files. When triggered, it performs a two-pass \texttt{rsync} and pushes only one commit per updated project.
+
+\begin{itemize}
+    \item **Debounce Mechanism:** Prevents redundant commits during rapid Overleaf recompilations.
+    \item **Single Commit per Folder:** Ensures each Overleaf project folder under \texttt{compiles/} triggers only one export.
+    \item **Systemd Integration:** The watcher runs continuously via \texttt{compiles-export-push.service}, restarting automatically on failure.
+\end{itemize}
+
+\section{Setting Up the Overleaf Document for Versioning}
+
+Inside our Overleaf project, we configured the LaTeX document to support automated version display.  
+
+\subsection*{Creating the \texttt{version.tex} File}
+
+We began by creating a new file named \texttt{version.tex} in the root of the project. Initially, it contained a placeholder command so the document would compile even before GitHub injected the actual version code:
+
+\begin{minted}{latex}
+% version.tex
+\newcommand{\Version}{dev}
+\end{minted}
+
+This placeholder is automatically replaced by the GitHub Action later with the real commit SHA and timestamp.
+
+\subsection*{Including \texttt{version.tex} in the Main Document}
+
+Next, we included the file in the main \texttt{manual.tex} (or \texttt{main.tex}) so that the defined \texttt{\textbackslash Version} command becomes available throughout the document:
+
+\begin{minted}{latex}
+\input{version.tex}
+\end{minted}
+
+\subsection*{Adding Version Information to the Footer}
+
+To make the version visible on every page, we customized the document footer using the \texttt{fancyhdr} package. The version is dynamically displayed by referencing the \texttt{\textbackslash Version} command defined in \texttt{version.tex}:
+
+\begin{minted}{latex}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot[C]{Version: \Version}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Overleaf GitHub Integration}
+\end{minted}
+
+This ensures the footer automatically updates with each GitHub commit once the workflow regenerates \texttt{version.tex}.
+
+\section{GitHub Action: Automatic Compilation and Versioning}
+
+After the watcher pushes changes, the GitHub Action workflow (\texttt{.github/workflows/compile.yml}) takes over. It automatically compiles the LaTeX document using the \href{https://github.com/xu-cheng/latex-action}{\texttt{xu-cheng/latex-action}} runner.
+
+\subsection*{Workflow Overview}
+\begin{enumerate}
+    \item **Detect Change Source:** Checks if the commit came from the Overleaf export service.
+    \item **Identify Project Folder:** Extracts the folder ID from the commit message.
+    \item **Generate Version Tag:** Creates a \texttt{version.tex} file containing the commit SHA and UTC timestamp.
+    \item **Compile LaTeX Project:** Builds the project using a GitHub-hosted runner.
+    \item **Archive the PDF:** Saves the compiled PDF in the \texttt{builds/} directory using the naming format:
+    \begin{verbatim}
+    builds/manual-<SHORT_SHA>.pdf
+    \end{verbatim}
+\end{enumerate}
+
+\subsection*{Version Injection Example}
+The generated \texttt{version.tex} file includes:
+\newcommand{\Version}{a1b2c3d-2025-10-22T21-00-00Z}
+\end{minted}
+
+This line is automatically generated by the GitHub Action during the workflow run. It replaces the placeholder from the initial \texttt{version.tex} file with a new commit identifier and timestamp each time the repository is updated.
+
+\subsection*{Versioning Logic}
+
+The workflow dynamically injects the version metadata using:
+\begin{minted}{bash}
+SHORT_SHA=$(git rev-parse --short HEAD)
+BUILD_DATE=$(date -u +'%Y-%m-%dT%H-%M-%SZ')
+echo "\\newcommand{\\Version}{$SHORT_SHA-$BUILD_DATE}" > version.tex
+\end{minted}
+
+This guarantees every compiled PDF can be traced directly back to a specific commit in GitHub, enabling transparent version control between Overleaf, the local container, and the repository history.
+
+\section{Results and Verification}
+
+After setting up the integration, every time a change is made to the Overleaf document and the watcher detects a new compilation, the updated project is automatically committed and pushed to GitHub.  
+The GitHub Action then:
+\begin{enumerate}
+    \item Inserts the new version number into \texttt{version.tex}.
+    \item Compiles the LaTeX document using the \texttt{latex-action} Docker runner.
+    \item Saves the compiled PDF under the \texttt{builds/} directory.
+\end{enumerate}
+
+Each generated PDF now includes a footer displaying:
+\begin{itemize}
+    \item The **current version code** (Git SHA + UTC timestamp)
+    \item The **page number** on the right
+    \item A **context label** (e.g., “Overleaf GitHub Integration”) on the left
+\end{itemize}
+
+This makes it easy to verify which revision of the project corresponds to each compiled document.
+
+\subsection*{Screenshot of Version Footer}
+
+The following image shows an example of the compiled PDF footer automatically generated by our workflow:
+
+\begin{center}
+\includegraphics[width=0.75\textwidth]{png/version-footer.png}\\
+\textit{Figure: PDF footer showing embedded version code and timestamp.}
+\end{center}
+
+

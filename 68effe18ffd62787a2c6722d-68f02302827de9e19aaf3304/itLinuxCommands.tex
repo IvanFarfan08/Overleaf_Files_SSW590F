@@ -7,7 +7,7 @@
 \section*{Environment Setup}
 The following bash commands were executed in a Linux terminal to create the test environment:
 
-\begin{lstlisting}[language=bash]
+\begin{verbatim}
 mkdir -p ~/lx-test && cd ~/lx-test
 printf "alpha\nbeta\nGamma\ngamma\nbeta\n" > words.txt
 printf "id,name,dept\n1,Ada,EE\n2,Linus,CS\n3,Grace,EE\n4,Dennis,CS\n" > people.csv
@@ -18,19 +18,20 @@ printf "one two three four\n" > src/file1.txt
 printf "two three four five\n" > src/file2.txt
 ln -s src/file1.txt link-to-file1
 touch -t 202401020304 old.txt
-\end{lstlisting}
+\end{verbatim}
+
 
 \section*{A) Navigation \& File Ops}
 \begin{enumerate}
 \item Show your present working directory path only. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
     pwd
     /senior_year/ssw590-devops/hw/linuxCommands/lx-test
 
-\end{lstlisting}
+\end{verbatim}
 
 \item List all entries in the current directory, one per line, including dotfiles. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ls -a1
     .
     ..
@@ -44,36 +45,36 @@ ls -a1
     tmp
     words.txt
 
-\end{lstlisting}
+\end{verbatim}
 
 \item Copy src/file1.txt to tmp/ only if tmp exists; do it verbosely. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 [ -d tmp ] && cp -v src/file1.txt tmp/
     src/file1.txt -> tmp/file1.txt
-\end{lstlisting}
+\end{verbatim}
 \item Move old.txt into archive/ and keep its original timestamp. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 cp -p old.txt archive/ && rm old.txt
 
-\end{lstlisting}
+\end{verbatim}
 \item Create a new empty file notes.md only if it doesn’t already exist. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 touch -c newfile.txt
 
-\end{lstlisting}
+\end{verbatim}
 \item Show disk usage (human-readable) for the src directory only (not total FS). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
     du -sh src
 
 8.0K	src
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{B) Viewing \& Searching}
 \begin{enumerate}
 \setcounter{enumi}{6}
 \item Print line numbers while displaying sys.log. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 nl -ba sys.log
 
      1	INFO boot ok
@@ -81,33 +82,33 @@ nl -ba sys.log
      3	ERROR fan fail
      4	INFO shutdown
 
-\end{lstlisting}
+\end{verbatim}
 
 \item Show only the lines in sys.log that contain ERROR (case-sensitive). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 cat sys.log|grep ERROR
     ERROR fan fail
-\end{lstlisting}
+\end{verbatim}
 \item Count how many distinct words appear in words.txt (case-insensitive). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 tr -c '[:alnum:]' '[\n*]' < words.txt | tr '[:upper:]' '[:lower:]' | sort | uniq | wc -l
 
        3
 
-\end{lstlisting}
+\end{verbatim}
 \item From words.txt, show lines that start with g or G. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 grep -ci "^g" words.txt 
     2
-\end{lstlisting}
+\end{verbatim}
 \item Display the first 2 lines of people.csv without using an editor. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 head -n 2 people.csv
     id,name,dept
     1,Ada,EE
-\end{lstlisting}
+\end{verbatim}
 \item Show the last 3 lines of sys.log and keep following if the file grows. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 tail -n 3 -f sys.log
     WARN disk low
     ERROR fan fail
@@ -115,32 +116,32 @@ tail -n 3 -f sys.log
 
 
 
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{C) Text Processing}
 \begin{enumerate}
 \setcounter{enumi}{12}
 \item From people.csv, print only the name column (2nd), excluding the header. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 tail -n +2 people.csv | cut -d, -f2
 
     Ada
     Linus
     Grace
     Dennis
-\end{lstlisting}
+\end{verbatim}
 
 \item Sort words.txt case-insensitively and remove duplicates. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 sort -fu words.txt
 
     alpha
     beta
     Gamma
-\end{lstlisting}
+\end{verbatim}
 \item Replace every three with 3 in all files under src/ in-place, creating .bak backups. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ryandavis@Ryans-MacBook-Air lx-test % find src -type f -exec sed -i .bak -E 's/\<three\>/3/g' {} +
 ryandavis@Ryans-MacBook-Air lx-test % ls
     archive		link-to-file1	src		tmp
@@ -148,102 +149,102 @@ ryandavis@Ryans-MacBook-Air lx-test % ls
 ryandavis@Ryans-MacBook-Air lx-test % ls src 
     file1.txt	file1.txt.bak	file2.txt	file2.txt.bak	lib
     
-\end{lstlisting}
+\end{verbatim}
 \item Print the number of lines, words, and bytes for every *.txt file in src/. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 wc src/*.txt
 
        1       4      19 src/file1.txt
        1       4      20 src/file2.txt
        2       8      39 total
 
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{D) Permissions \& Ownership}
 \begin{enumerate}
 \setcounter{enumi}{16}
 \item Make tmp/ readable, writable, and searchable only by the owner. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 chmod 700 tmp/
 
-\end{lstlisting}
+\end{verbatim}
 \item Give group execute permission to src/lib recursively without touching others/owner bits. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 chmod -R g+x src/lib
 
-\end{lstlisting}
+\end{verbatim}
 \item Show the numeric (octal) permissions of src/file2.txt. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 stat -f "%Lp" src/file2.txt
     644
-\end{lstlisting}
+\end{verbatim}
 \item Make notes.md append-only for the owner via file attributes (if supported). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
     not supported
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{E) Links \& Find}
 \begin{enumerate}
 \setcounter{enumi}{20}
 \item Verify whether link-to-file1 is a symlink and show its target path. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ls -l link-to-file1
 lrwxrwxrwx 1 root root 13 Sep 17 20:46 link-to-file1 -> src/file1.txt
-\end{lstlisting}
+\end{verbatim}
 \item Find all regular files under the current tree larger than 40 KiB. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 find . -type f -size +40k
 ./blob.bin
-\end{lstlisting}
+\end{verbatim}
 \item Find files modified in the last 10 minutes under tmp/ and print their sizes. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
  find tmp/ -type f -mmin -10 -exec ls -lh {} \;
 -rw-r--r-- 1 root root 19 Sep 17 20:57 tmp/file1.txt
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{F) Processes \& Job Control}
 \begin{enumerate}
 \setcounter{enumi}{23}
 \item Show your processes in a tree view. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ps --forest
   PID TTY          TIME CMD
     1 pts/0    00:00:00 bash
   827 pts/0    00:00:00 ps
-\end{lstlisting}
+\end{verbatim}
 \item Start sleep 120 in the background and show its PID. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 sleep 120 & echo $!
 [1] 834
 834
-\end{lstlisting}
+\end{verbatim}
 \item Send a TERM signal to all sleep processes owned by you (don’t use kill -9). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 pkill sleep
 [1]+  Done                    sleep 120
-\end{lstlisting}
+\end{verbatim}
 \item Show the top 5 processes by memory usage (one-shot, not interactive). \vspace{2em}\\
 \end{enumerate}
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ps aux --sort=-\%mem | head -n 6
 USER       PID \%CPU \%MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root         1  0.0  0.0   4632  3808 pts/0    Ss   Sep17   0:00 bash
 root       836  0.0  0.0   6408  2496 pts/0    R+   00:58   0:00 ps aux --sort=-\%mem
 root       828  0.0  0.0   2304  1292 pts/1    Ss+  Sep17   0:00 /bin/sh
 root       837  0.0  0.0   2212  1104 pts/0    S+   00:58   0:00 head -n 6
-\end{lstlisting}
+\end{verbatim}
 \section*{G) Archiving \& Compression}
 \begin{enumerate}
 \setcounter{enumi}{27}
 \item Create a gzipped tar archive src.tgz from src/ with relative paths. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 tar -czf src.tgz src/
-\end{lstlisting}
+\end{verbatim}
 \item List the contents of src.tgz without extracting. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 tar -tzf src.tgz
 src/
 src/file1.txt
@@ -251,76 +252,76 @@ src/file1.txt.bak
 src/file2.txt
 src/file2.txt.bak
 src/lib/
-\end{lstlisting}
+\end{verbatim}
 \item Extract only file2.txt from src.tgz into tmp/. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 tar -xzf src.tgz -C tmp/ src/file2.txt3
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{H) Networking \& System Info}
 \begin{enumerate}
 \setcounter{enumi}{30}
 \item Show all listening TCP sockets with associated PIDs (no root assumptions). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ss -tlnp
 State   Recv-Q   Send-Q     Local Address:Port     Peer Address:Port  Process
-\end{lstlisting}
+\end{verbatim}
 \item Print your default route (gateway) in a concise form. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 ip route | grep default
 default via 172.17.0.1 dev eth0 
-\end{lstlisting}
+\end{verbatim}
 \item Display kernel name, release, and machine architecture. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 uname -srm
 Linux 6.10.14-linuxkit aarch64
-\end{lstlisting}
+\end{verbatim}
 \item Show the last 5 successful logins (or last sessions) on the system. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 last -n 5
 
 wtmp begins Wed Sep 17 20:44:48 2025
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{I) Package \& Services (Debian/Ubuntu)}
 \begin{enumerate}
 \setcounter{enumi}{34}
 \item Show the installed version of package coreutils. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 dpkg -l coreutils
-\end{lstlisting}
+\end{verbatim}
 \item Search available packages whose names contain ripgrep. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 apt search ripgrep
 Sorting... Done
 Full Text Search... Done
 ripgrep/jammy-updates,jammy-security 13.0.0-2ubuntu0.1 arm64
   Recursively searches directories for a regex pattern
-\end{lstlisting}
+\end{verbatim}
 \item Check whether service cron is active and print its status line only. 
 \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 service cron status
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}
 
 \section*{J) Bash \& Scripting}
 \begin{enumerate}
 \setcounter{enumi}{37}
 \item Write a one-liner that loops over *.txt in src/ and prints: \texttt{<filename>: <linecount>}. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 for f in src/*.txt; do echo "$f: $(wc -l < "$f")"; done
-\end{lstlisting}
+\end{verbatim}
 \item Write a command that exports CSV rows where dept == "CS" to cs.txt (exclude header). \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 awk -F, '$2 == "CS" {print}' input.csv | tail -n +2 > cs.txt
-\end{lstlisting}
+\end{verbatim}
 \item Create a variable X with value 42, print it, then remove it from the environment. \vspace{2em}\\
-\begin{lstlisting}[language=sh]
+\begin{verbatim}
 export X=42
 echo $X
 unset X
-\end{lstlisting}
+\end{verbatim}
 \end{enumerate}

@@ -1,0 +1,4 @@
+PWD /var/lib/overleaf/data/compiles/68effe18ffd62787a2c6722d-68f02302827de9e19aaf3304
+INPUT /usr/local/texlive/2025/texmf.cnf
+INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt

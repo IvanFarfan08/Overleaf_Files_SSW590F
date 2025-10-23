@@ -20,6 +20,7 @@ itprojectproposal.tex
 prologue.tex
 itOverleafGithub.tex
 version.tex
+itGithubAction.tex
 eps/UseCases/MyUseCaseDiagram.eps
 eps/UseCases/dsnHelloWorld.eps
 eps/UseCases/dsnMyDiagram.eps
@@ -29,5 +30,6 @@ png/bugzilla.png
 png/colorButtonPage.jpg
 png/latexdocker.png
 png/stvAgileProcess.png
+png/version-footer.png
 visio/UseCases/dsnSampleUseCase.vsd
-stateHash:1415657b0223274abfa1afa3960192b7f457c8d3
+stateHash:0f9f37d34c6f5c4cacb09e0a14231fa1474bba8b
