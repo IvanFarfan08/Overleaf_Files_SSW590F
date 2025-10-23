@@ -64,12 +64,15 @@ jobs:
           # Export commit SHA for later PDF naming
           echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
 
-      - name: Compile LaTeX document (skip bibtex)
+      - name: Compile LaTeX document
         if: steps.check_commit.outputs.skip != 'true'
-        run: |
-          cd "${{ env.LATEST_PROJECT }}"
-          echo "Compiling output.tex in $(pwd)"
-          latexmk -jobname=compile -pdf -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape -bibtex- --quiet output.tex || true
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: ${{ env.LATEST_PROJECT }}
+          root_file: output.tex
+          latexmk_shell_escape: true
+          args: -pdf -interaction=nonstopmode -file-line-error -bibtex- --quiet -jobname=compile
+          continue_on_error: true
 
       - name: Archive compiled PDF
         if: steps.check_commit.outputs.skip != 'true'
