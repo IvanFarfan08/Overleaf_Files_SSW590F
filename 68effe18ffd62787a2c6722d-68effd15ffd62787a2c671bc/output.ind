@@ -1,24 +1,24 @@
 \begin{theindex}
 
-  \item AWSDeployment, \hyperpage{15}
+  \item AWSDeployment, \hyperpage{7}
 
   \indexspace
 
-  \item Bugzilla, \hyperpage{20}
+  \item Bugzilla, \hyperpage{12}
 
   \indexspace
 
   \item Chapter
-    \subitem AWSDeployment, \hyperpage{15}
+    \subitem AWSDeployment, \hyperpage{7}
     \subitem Hosts, \hyperpage{4}
     \subitem Kanban Setup, \hyperpage{1}
-    \subitem LaTeXDocker, \hyperpage{18}
+    \subitem LaTeXDocker, \hyperpage{10}
     \subitem Linux Commands, \hyperpage{5}
     \subitem Passwords, \hyperpage{2}
-    \subitem Project Proposal: Figma2AWS, \hyperpage{14}
-  \item Chapter::Bugzilla, \hyperpage{20}
-  \item Chapter::Overleaf, \hyperpage{24}
-  \item Chapter::Overleaf and Github Integration, \hyperpage{28}
+    \subitem Project Proposal: Figma2AWS, \hyperpage{6}
+  \item Chapter::Bugzilla, \hyperpage{12}
+  \item Chapter::Overleaf, \hyperpage{16}
+  \item Chapter::Overleaf and Github Integration, \hyperpage{20}
 
   \indexspace
 
@@ -30,17 +30,17 @@
 
   \indexspace
 
-  \item latexdocker, \hyperpage{18}
+  \item latexdocker, \hyperpage{10}
   \item Linux Commands, \hyperpage{5}
 
   \indexspace
 
-  \item Overleaf, \hyperpage{24}
-  \item Overleaf and Github Integration, \hyperpage{28}
+  \item Overleaf, \hyperpage{16}
+  \item Overleaf and Github Integration, \hyperpage{20}
 
   \indexspace
 
   \item Passwords, \hyperpage{2}
-  \item Project Proposal: Figma2AWS, \hyperpage{14}
+  \item Project Proposal: Figma2AWS, \hyperpage{6}
 
 \end{theindex}
