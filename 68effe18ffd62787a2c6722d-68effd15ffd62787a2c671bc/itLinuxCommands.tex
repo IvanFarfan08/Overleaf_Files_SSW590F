@@ -6,3 +6,16 @@
 
 \section*{Environment Setup}
 The following bash commands were executed in a Linux terminal to create the test environment:
+
+\begin{verbatim}
+mkdir -p ~/lx-test && cd ~/lx-test
+printf "alpha\nbeta\nGamma\ngamma\nbeta\n" > words.txt
+printf "id,name,dept\n1,Ada,EE\n2,Linus,CS\n3,Grace,EE\n4,Dennis,CS\n" > people.csv
+printf "INFO boot ok\nWARN disk low\nERROR fan fail\nINFO shutdown\n" > sys.log
+dd if=/dev/zero of=blob.bin bs=1K count=48 status=none
+mkdir -p src/lib tmp archive
+printf "one two three four\n" > src/file1.txt
+printf "two three four five\n" > src/file2.txt
+ln -s src/file1.txt link-to-file1
+touch -t 202401020304 old.txt
+\end{verbatim}
