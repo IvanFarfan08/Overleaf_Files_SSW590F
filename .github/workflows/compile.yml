@@ -67,6 +67,20 @@ jobs:
           echo "Listing contents of ${{ env.LATEST_PROJECT }}"
           ls -lah "${{ env.LATEST_PROJECT }}"
 
+      - name: Detect root LaTeX file
+        if: steps.check_commit.outputs.skip != 'true'
+        run: |
+          if [ -f "${{ env.LATEST_PROJECT }}/output.tex" ]; then
+            ROOT_FILE="output.tex"
+          elif [ -f "${{ env.LATEST_PROJECT }}/main.tex" ]; then
+            ROOT_FILE="main.tex"
+          else
+            echo "Error: Neither output.tex nor main.tex found in ${{ env.LATEST_PROJECT }}"
+            exit 1
+          fi
+          echo "Detected root file: $ROOT_FILE"
+          echo "ROOT_FILE=$ROOT_FILE" >> $GITHUB_ENV
+
       - name: Generate version.tex
         if: steps.check_commit.outputs.skip != 'true'
         run: |
@@ -84,7 +98,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: ${{ env.LATEST_PROJECT }}
-          root_file: output.tex
+          root_file: ${{ env.ROOT_FILE }}
           latexmk_shell_escape: true
           args: -pdf -interaction=nonstopmode -file-line-error -f --quiet -jobname=compile
           continue_on_error: true
