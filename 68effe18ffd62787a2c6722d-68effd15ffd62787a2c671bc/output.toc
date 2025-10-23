@@ -2,53 +2,53 @@
 \contentsline {chapter}{\numberline {2}Passwords \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{2}{chapter.2}%
 \contentsline {chapter}{\numberline {3}Hosts \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{4}{chapter.3}%
 \contentsline {chapter}{\numberline {4}Linux Commands \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{5}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Project Proposal \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{6}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Figma2AWS}{6}{section.5.1}%
-\contentsline {paragraph}{}{6}{section*.4}%
-\contentsline {paragraph}{}{6}{section*.6}%
-\contentsline {paragraph}{}{6}{section*.7}%
-\contentsline {chapter}{\numberline {6}AWS Deployment \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{7}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Deployment Steps \& Commands (Local $\rightarrow $ AWS)}{7}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Local Build \& Run (Docker)}{7}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Authenticate \& Push to ECR}{7}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Quick Deploy with AWS App Runner}{8}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Live Links}{8}{subsection.6.1.4}%
-\contentsline {section}{\numberline {6.2}Updated Design Class Diagram}{8}{section.6.2}%
-\contentsline {chapter}{\numberline {7}LaTeX Docker \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{10}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Project Layout}{10}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Dockerfile}{10}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Build and Run}{10}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Screenshot}{11}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Conclusion}{11}{section.7.5}%
-\contentsline {chapter}{\numberline {8}Bugzilla \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{12}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Overview}{12}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Configuration Steps}{12}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Droplet Setup}{12}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}MySQL Container Configuration}{13}{subsection.8.2.2}%
-\contentsline {subsection}{\numberline {8.2.3}Bugzilla Container Setup}{13}{subsection.8.2.3}%
-\contentsline {subsection}{\numberline {8.2.4}Troubleshooting and Resource Limitations}{14}{subsection.8.2.4}%
-\contentsline {subsection}{\numberline {8.2.5}Apache Restart and Verification}{14}{subsection.8.2.5}%
-\contentsline {section}{\numberline {8.3}Result}{14}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Container Web Access}{15}{section.8.4}%
-\contentsline {chapter}{\numberline {9}Overleaf \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{16}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Overview}{16}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Configuration Steps}{16}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Droplet Setup}{16}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}Docker Compose Plugin Installation}{16}{subsection.9.2.2}%
-\contentsline {subsection}{\numberline {9.2.3}Verifying Docker Status}{17}{subsection.9.2.3}%
-\contentsline {section}{\numberline {9.3}Overleaf Toolkit Installation}{17}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Preparing the Environment}{17}{subsection.9.3.1}%
-\contentsline {subsection}{\numberline {9.3.2}Configuration}{18}{subsection.9.3.2}%
-\contentsline {section}{\numberline {9.4}Starting Overleaf}{18}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Result}{18}{section.9.5}%
-\contentsline {section}{\numberline {9.6}Container Web Access}{18}{section.9.6}%
-\contentsline {chapter}{\numberline {10}Overleaf and Github Integration \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{20}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Overview}{20}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Domain Name}{20}{section.10.2}%
-\contentsline {section}{\numberline {10.3}SSL Configuration}{20}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Configuring LaTeX Packages in Overleaf (Container)}{21}{section.10.4}%
-\contentsline {paragraph}{1) Update \texttt {tlmgr} (TeX Live Manager).}{21}{section*.9}%
-\contentsline {paragraph}{2) Install the full TeX Live package set.}{21}{section*.10}%
-\contentsline {section}{\numberline {10.5}Connecting Overleaf to GitHub}{21}{section.10.5}%
-\contentsline {section}{\numberline {10.6}Compiling Overleaf Projects from the Command Line}{25}{section.10.6}%
-\contentsline {chapter}{Bibliography}{27}{chapter*.15}%
+\contentsline {chapter}{\numberline {5}Project Proposal \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Figma2AWS}{15}{section.5.1}%
+\contentsline {paragraph}{}{15}{section*.14}%
+\contentsline {paragraph}{}{15}{section*.16}%
+\contentsline {paragraph}{}{15}{section*.17}%
+\contentsline {chapter}{\numberline {6}AWS Deployment \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{16}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Deployment Steps \& Commands (Local $\rightarrow $ AWS)}{16}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Local Build \& Run (Docker)}{16}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Authenticate \& Push to ECR}{16}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Quick Deploy with AWS App Runner}{17}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}Live Links}{17}{subsection.6.1.4}%
+\contentsline {section}{\numberline {6.2}Updated Design Class Diagram}{17}{section.6.2}%
+\contentsline {chapter}{\numberline {7}LaTeX Docker \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{19}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Project Layout}{19}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Dockerfile}{19}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Build and Run}{19}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Screenshot}{20}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Conclusion}{20}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Bugzilla \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{21}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Overview}{21}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Configuration Steps}{21}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Droplet Setup}{21}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}MySQL Container Configuration}{22}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}Bugzilla Container Setup}{22}{subsection.8.2.3}%
+\contentsline {subsection}{\numberline {8.2.4}Troubleshooting and Resource Limitations}{23}{subsection.8.2.4}%
+\contentsline {subsection}{\numberline {8.2.5}Apache Restart and Verification}{23}{subsection.8.2.5}%
+\contentsline {section}{\numberline {8.3}Result}{23}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Container Web Access}{24}{section.8.4}%
+\contentsline {chapter}{\numberline {9}Overleaf \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{25}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Overview}{25}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Configuration Steps}{25}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Droplet Setup}{25}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Docker Compose Plugin Installation}{25}{subsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.2.3}Verifying Docker Status}{26}{subsection.9.2.3}%
+\contentsline {section}{\numberline {9.3}Overleaf Toolkit Installation}{26}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Preparing the Environment}{26}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Configuration}{27}{subsection.9.3.2}%
+\contentsline {section}{\numberline {9.4}Starting Overleaf}{27}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Result}{27}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Container Web Access}{27}{section.9.6}%
+\contentsline {chapter}{\numberline {10}Overleaf and Github Integration \\ \small {\textit {-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}{29}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Overview}{29}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Domain Name}{29}{section.10.2}%
+\contentsline {section}{\numberline {10.3}SSL Configuration}{29}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Configuring LaTeX Packages in Overleaf (Container)}{30}{section.10.4}%
+\contentsline {paragraph}{1) Update \texttt {tlmgr} (TeX Live Manager).}{30}{section*.19}%
+\contentsline {paragraph}{2) Install the full TeX Live package set.}{30}{section*.20}%
+\contentsline {section}{\numberline {10.5}Connecting Overleaf to GitHub}{30}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Compiling Overleaf Projects from the Command Line}{34}{section.10.6}%
+\contentsline {chapter}{Bibliography}{36}{chapter*.25}%
