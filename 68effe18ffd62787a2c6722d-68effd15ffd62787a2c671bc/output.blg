@@ -12,6 +12,7 @@ A level-1 auxiliary file: itLaTeXDocker.aux
 A level-1 auxiliary file: itBugzilla.aux
 A level-1 auxiliary file: itOverleaf.aux
 A level-1 auxiliary file: itOverleafGithub.aux
+A level-1 auxiliary file: itGithubAction.aux
 The style file: IEEEtran.bst
 I found no \citation commands---while reading file output.aux
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -27,7 +28,7 @@ Database file #1: bibfile.bib
 Done.
 You've used 0 entries,
             3975 wiz_defined-function locations,
-            806 strings with 7242 characters,
+            807 strings with 7260 characters,
 and the built_in function-call counts, 92 in all, are:
 = -- 0
 > -- 0
