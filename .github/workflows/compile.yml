@@ -71,7 +71,7 @@ jobs:
           working_directory: ${{ env.LATEST_PROJECT }}
           root_file: output.tex
           latexmk_shell_escape: true
-          args: -pdf -interaction=nonstopmode -file-line-error -bibtex- --quiet -jobname=compile
+          args: -pdf -interaction=nonstopmode -file-line-error -f --quiet -jobname=compile
           continue_on_error: true
 
       - name: Archive compiled PDF
