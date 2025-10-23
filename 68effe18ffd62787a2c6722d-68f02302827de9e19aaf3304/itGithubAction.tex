@@ -99,13 +99,14 @@ After the watcher pushes changes, the GitHub Action workflow (\texttt{.github/wo
     \item **Generate Version Tag:** Creates a \texttt{version.tex} file containing the commit SHA and UTC timestamp.
     \item **Compile LaTeX Project:** Builds the project using a GitHub-hosted runner.
     \item **Archive the PDF:** Saves the compiled PDF in the \texttt{builds/} directory using the naming format:
-    \begin{verbatim}
+    \begin{minted}{text}
     builds/manual-<SHORT_SHA>.pdf
-    \end{verbatim}
+    \end{minted}
 \end{enumerate}
 
 \subsection*{Version Injection Example}
 The generated \texttt{version.tex} file includes:
+\begin{minted}{latex}
 \newcommand{\Version}{a1b2c3d-2025-10-22T21-00-00Z}
 \end{minted}
 
@@ -134,9 +135,9 @@ The GitHub Action then:
 
 Each generated PDF now includes a footer displaying:
 \begin{itemize}
-    \item The **current version code** (Git SHA + UTC timestamp)
-    \item The **page number** on the right
-    \item A **context label** (e.g., “Overleaf GitHub Integration”) on the left
+    \item The \textbf{current version code} (Git SHA + UTC timestamp)
+    \item The \textbf{page number} on the right
+    \item A \textbf{context label} (e.g., ``Overleaf GitHub Integration'') on the left
 \end{itemize}
 
 This makes it easy to verify which revision of the project corresponds to each compiled document.
@@ -149,5 +150,4 @@ The following image shows an example of the compiled PDF footer automatically ge
 \includegraphics[width=0.75\textwidth]{png/version-footer.png}\\
 \textit{Figure: PDF footer showing embedded version code and timestamp.}
 \end{center}
-
 
