@@ -95,7 +95,7 @@ jobs:
 
       - name: Compile LaTeX document
         if: steps.check_commit.outputs.skip != 'true'
-        uses: xu-cheng/latex-action@v3
+        uses: xu-cheng/latex-action@v4
         with:
           working_directory: ${{ env.LATEST_PROJECT }}
           root_file: ${{ env.ROOT_FILE }}
