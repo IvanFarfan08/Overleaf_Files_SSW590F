@@ -386,8 +386,6 @@ INPUT ./itJenkins.tex
 INPUT ./itJenkins.tex
 INPUT ./itLoadBalancerVirtualHost.tex
 INPUT ./itLoadBalancerVirtualHost.tex
-INPUT ./itFinalProject.tex
-INPUT ./itFinalProject.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/textcomp.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/textcomp.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/ot1txr.fd
@@ -730,3 +728,14 @@ INPUT ./png/grafanaSS.png
 INPUT ./png/grafanaSS.png
 INPUT ./png/grafanaSS.png
 INPUT ./png/grafanaSS.png
+INPUT ./itJenkins.tex
+INPUT ./itJenkins.tex
+OUTPUT itJenkins.aux
+INPUT ./itJenkins.tex
+INPUT ./itJenkins.tex
+INPUT itJenkins.tex
+INPUT ./png/jenkins_running.png
+INPUT ./png/jenkins_running.png
+INPUT ./png/jenkins_running.png
+INPUT ./png/jenkins_running.png
+INPUT ./png/jenkins_running.png

@@ -1,0 +1,127 @@
+\chapter{Helix Core, Swarm, and Jenkins Integration \\
+\small{\textit{-- Johan Jaramillo}}}
+\index{Helix Core}
+\index{Helix Swarm}
+\index{Jenkins}
+\index{Chapter::Helix Core and Jenkins Integration}
+\label{Chapter::Helix Core and Jenkins Integration}
+
+\section{Overview}
+For this individual final project, I deployed and integrated Perforce Helix Core,
+Helix Swarm, and Jenkins to demonstrate a complete DevOps workflow for managing and
+automating LaTeX document builds. The goal of this setup was to showcase enterprise-style
+source control, code review, and continuous integration using Perforce tooling instead
+of traditional Git-based solutions.
+
+The workflow includes hosting a Perforce server, submitting and reviewing LaTeX source
+files using Helix Swarm, and configuring Jenkins to automatically fetch and process the
+latest files from Perforce as part of a CI pipeline.
+
+\section{Helix Core (Perforce Server) Deployment}
+
+\subsection{Droplet Setup}
+A dedicated DigitalOcean droplet was provisioned to host the Helix Core server.
+This droplet runs a Linux-based operating system and was configured exclusively
+for Perforce services to maintain isolation and clarity in the deployment architecture.
+
+\subsection{Installing Helix Core}
+The Perforce Helix Core server (\texttt{p4d}) was installed using Perforce’s official
+distribution. Once installed, the server was initialized with a dedicated root directory
+for versioned data storage.
+
+\begin{minted}{bash}
+p4d -r /p4/1/root -p 1666
+\end{minted}
+
+The server listens on the default Perforce port \texttt{1666} and was verified using
+the \texttt{p4 info} command after installation.
+
+\subsection{User and Security Configuration}
+A dedicated Perforce user account (\texttt{perforce}) was used as the primary service
+account for administrative tasks and CI integration. Password-based authentication
+was enabled using Perforce’s security levels.
+
+During setup, the security level was temporarily lowered to reset credentials and
+then restored to enforce authentication:
+
+\begin{minted}{bash}
+p4 configure set security=0
+p4 passwd perforce
+p4 configure set security=3
+\end{minted}
+
+This ensured that both interactive users and automated systems (such as Jenkins)
+could authenticate securely with the Perforce server.
+
+\section{Depot Creation and Initial File Submission}
+
+\subsection{Creating a Depot}
+A new Perforce depot named \texttt{latex-depot} was created to store all LaTeX source
+files associated with the project. This depot serves as the single source of truth
+for version-controlled documentation.
+
+\subsection{Submitting LaTeX Files}
+The LaTeX project files were uploaded from a client workspace mapped to the depot.
+All source files, images, bibliography files, and class files were included to ensure
+the project could be built consistently from version control alone.
+
+\begin{minted}{bash}
+p4 add ...
+p4 submit -d "Initial LaTeX project submission"
+\end{minted}
+
+After the initial submission, at least one additional change was made and submitted
+to demonstrate active version control usage, satisfying the assignment requirements.
+
+\section{Helix Swarm Deployment and Code Review}
+
+\subsection{Swarm Installation}
+Helix Swarm was deployed on a separate DigitalOcean droplet and configured to connect
+to the Helix Core server. Swarm was linked to the Perforce instance by specifying the
+server address, service user, and authentication credentials during setup.
+
+\subsection{Code Review Workflow}
+Once integrated, Swarm was used to create and manage code reviews for submitted LaTeX
+files. Each changelist submitted to the depot could be reviewed directly through the
+Swarm web interface.
+
+The review process included:
+\begin{itemize}
+  \item Viewing diffs of modified \texttt{.tex} files
+  \item Adding review comments
+  \item Approving changes through Swarm
+\end{itemize}
+
+This demonstrated an enterprise-style peer review workflow similar to pull requests
+in Git-based systems.
+
+\section{Jenkins Deployment}
+
+\subsection{Jenkins Installation}
+Jenkins was deployed on a separate droplet alongside an existing Overleaf instance.
+This droplet was responsible for running CI jobs and interacting with the Perforce
+server remotely.
+
+Jenkins was installed using the official package repository and verified through
+its web-based management interface.
+
+\subsection{Perforce Integration in Jenkins}
+The Jenkins Perforce Plugin was installed to enable native interaction with Helix Core.
+A Jenkins credential was created using the \texttt{perforce} user credentials, allowing
+Jenkins jobs to authenticate securely with the Perforce server.
+
+This setup allows Jenkins pipelines to:
+\begin{itemize}
+  \item Connect to the remote Perforce server
+  \item Sync the latest changelists from the depot
+  \item Use changelist numbers as part of build metadata
+\end{itemize}
+
+\section{Preparation for CI/CD Automation}
+With Helix Core, Swarm, and Jenkins successfully deployed and integrated, the environment
+was fully prepared for CI/CD automation. Jenkins was able to authenticate against the
+Perforce server and retrieve LaTeX source files, enabling automated compilation and
+versioned PDF generation in later stages of the pipeline.
+
+The Jenkins pipeline configuration and LaTeX compilation process are discussed in
+subsequent sections of this report.

@@ -25,6 +25,7 @@ itPrometheusGrafana.tex
 itJenkins.tex
 itLoadBalancerVirtualHost.tex
 itFinalProject.tex
+itfinaliproject.tex
 eps/UseCases/MyUseCaseDiagram.eps
 eps/UseCases/dsnHelloWorld.eps
 eps/UseCases/dsnMyDiagram.eps
@@ -54,4 +55,4 @@ png/finalProject/cpuPercent.png
 png/finalProject/releases.png
 png/finalProject/classes_main_oop.png
 visio/UseCases/dsnSampleUseCase.vsd
-stateHash:8db73dfefbee15c59c489c8f882171e3c2c5750e
+stateHash:cadac2d435ad84d1c10ca4e08cef940f65e11a01
