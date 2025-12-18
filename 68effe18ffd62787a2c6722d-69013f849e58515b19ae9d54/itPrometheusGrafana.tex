@@ -1,0 +1,26 @@
+\chapter{Prometheus with Grafana \\
+\small{\textit{-- Ryan Davis, Ivan Farfan, Johan Jaramillo}}
+\index{Prometheus with Grafana} 
+\index{Chapter!PrometheusWithGrafana}
+\label{Chapter::PrometheusWithGrafana}}
+
+\section{Overview}
+We set up a real-time monitoring stack with Prometheus, Grafana, and Node Explorer, allowing us for full observability within our system.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{png/prometheusSS.png}
+    \caption{Prometheus UI at http://localhost:9091}
+    \label{fig:PrometheusUI}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{png/grafanaSS.png}
+    \caption{Grafana dashboard 1860 with real-time metrics}
+    \label{fig:PrometheusUI}
+\end{figure}
+
+
+\section{The role of Prometheus, Grafana, and Node Exporter}
+Node explorer is utilized to expose metrics of the system, allowing Prometheus to collect metrics to be displayed. Prometheus is used to collect metrics, and stores data in a time-based database. Grafana is the data visualization layer of this technology stack, providing a dashboard for visualizing system metrics. Dashboard 1860 provides real time data regarding system health, with metrics including: CPU usage per core, memory consumption, disk read/write operations, network throughput, and file system usage. Such metrics allow for users to detect the performance of a system for proactive monitoring.

@@ -1,0 +1,162 @@
+\chapter{Jenkins with Pytest \\
+\small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
+\index{Jenkins CI/CD}
+\index{Chapter::Jenkins with Pytest}
+\label{Chapter::JenkinsPytest}
+
+\section{Containerized Jenkins Setup}
+
+\subsection*{Dockerfile with Python Support}
+
+The default Jenkins image (\texttt{jenkins/jenkins:lts}) does not include Python, which caused the initial pipeline to fail when attempting to create a virtual environment.  
+To fix this, a custom Dockerfile was created to install Python~3, \texttt{pip}, and \texttt{venv} directly into the Jenkins image.
+
+\begin{minted}{docker}
+FROM jenkins/jenkins:lts
+USER root
+
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip python3-venv && \
+    rm -rf /var/lib/apt/lists/*
+
+USER jenkins
+\end{minted}
+
+\subsection*{docker-compose.yml Configuration}
+
+The Docker Compose file was modified to build the new image and ensure Jenkins runs as \texttt{root}, preventing permission issues when writing to the mounted volume.
+
+\begin{minted}{yaml}
+version: '3.8'
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+volumes:
+  jenkins_home:
+\end{minted}
+
+Jenkins was then rebuilt and started using:
+
+\begin{minted}{bash}
+docker compose down
+docker compose build
+docker compose up -d
+docker exec -it jenkins python3 --version
+\end{minted}
+
+Once running, Jenkins was accessed through:
+\begin{verbatim}
+http://localhost:8080/jenkins
+\end{verbatim}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{png/jenkins_running.png}\\
+\textit{Figure: Jenkins container running successfully in Docker.}
+\end{center}
+
+
+
+
+
+\section{Pipeline Configuration in Jenkins}
+
+\subsection*{Final Jenkinsfile}
+
+After multiple iterations, the working Jenkinsfile avoided using virtual environments and installed dependencies system-wide using the \texttt{--break-system-packages} flag.  
+This resolved Python’s \texttt{externally-managed-environment} error, which had caused earlier builds to fail.
+
+\begin{minted}{groovy}
+pipeline {
+    agent any
+    stages {
+        stage('Install dependencies') {
+            steps {
+                sh 'pip3 install --break-system-packages -r requirements.txt'
+            }
+        }
+        stage('Run tests') {
+            steps {
+                sh 'pytest --junitxml=report.xml || true'
+            }
+        }
+        stage('Publish Report') {
+            steps {
+                junit 'report.xml'
+            }
+        }
+    }
+}
+\end{minted}
+
+The \texttt{|| true} ensures the pipeline continues to publish the report even if some tests fail.
+
+\subsection*{GitHub Integration}
+
+The Jenkins job was configured as a \textit{Pipeline script from SCM} job with the following settings:
+
+\begin{itemize}
+    \item \textbf{Repository:} \texttt{https://github.com/Johan0214/jenkins-python-pytest-demo.git}
+    \item \textbf{Branch:} \texttt{main}
+    \item \textbf{Script Path:} \texttt{Jenkinsfile}
+\end{itemize}
+
+
+
+\section{Results}
+
+\subsection*{Pipeline Execution}
+
+After configuration, the pipeline successfully completed all stages:
+\begin{itemize}
+    \item Checkout SCM
+    \item Install dependencies
+    \item Run tests
+    \item Publish report
+\end{itemize}
+
+Even though one test intentionally failed, the report was still generated and displayed in Jenkins.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{png/pipeline_stages.png}\\
+\textit{Figure: Jenkins pipeline execution showing all stages completed.}
+\end{center}
+
+\subsection*{Test Results}
+
+Jenkins displayed the following results:
+\begin{itemize}
+    \item \textbf{2 tests passed}
+    \item \textbf{1 test failed (intentional)}
+\end{itemize}
+
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{png/test_results.png}\\
+\textit{Figure: Jenkins test report showing 2 passed and 1 failed test.}
+\end{center}
+
+\subsection*{Error Handling and Fixes}
+
+Several configuration problems were resolved during the process:
+\begin{itemize}
+    \item \textbf{Python missing:} resolved by building a custom Docker image.
+    \item \textbf{Permission denied:} fixed by running Jenkins as \texttt{root}.
+    \item \textbf{Virtual environment errors:} avoided by using direct \texttt{pip3 install}.
+    \item \textbf{Test report not publishing:} solved using the \texttt{|| true} modifier.
+\end{itemize}
+
+\section{Conclusion}
+
+The Jenkins–Pytest pipeline was successfully implemented using a custom Docker-based Jenkins environment.  
+
+

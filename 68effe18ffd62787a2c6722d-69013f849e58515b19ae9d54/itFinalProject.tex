@@ -1,0 +1,383 @@
+\chapter{Final Project \\
+\small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
+\index{Final Project}
+\index{Chapter::Final Project}
+\label{Chapter::Final Project}
+
+\section{Issue Tracking}
+For the issue tracking of our Figma to Deployment project, we used GitHub to monitor different features to be implemented into our project.
+
+\begin{center}
+\includegraphics[width=0.75\textwidth]{png/finalProject/issueTracking.png}\\
+\textit{Figure: GitHub Issues providing tasks to be completed for our Figma Plugin}
+\end{center}
+
+\section{Source Control}
+    For the source control of our project, we used Git and GitHub in order to develop different components of our plugin, with respect to the issues provided in GitHub.
+
+\begin{center}
+\includegraphics[width=0.75\textwidth]{png/finalProject/versionControl.png}\\
+\textit{Figure: Our GitHub repository containing the source code for version control monitoring.}
+\end{center}
+
+\begin{minted}{bash}
+git remote -v
+    origin	https://github.com/IvanFarfan08/Figma2AWS_Plugin.git (fetch)
+    origin	https://github.com/IvanFarfan08/Figma2AWS_Plugin.git (push)
+\end{minted}
+
+\section{Architecture Forward Documentation}
+To compile our latex document, we used our instance of Overleaf, running on Digital Ocean. This allows for our project to be compiled through our CI/CD pipeline, using GitHub Actions.
+\begin{center}
+\includegraphics[width=0.75\textwidth]{png/finalProject/ourOverleaf.png}\\
+\textit{Figure: Our Overleaf instance for producing our LaTeX documentation.}
+\end{center}
+
+
+\section{CI/CD Tools}
+We use GitHub Actions to run our CI/CD pipeline. The .yml file we wrote handles the following tasks on push: 
+\begin{itemize}
+    \item Checking out our repository
+    \item Writing the commit hash for versioning
+    \item Versioning our build into the format vMajor.Minor.Hash
+    \item Run backend Python tests
+    \item Compile our LaTeX document
+    \item Package the Figma plugin folder for deployment
+    \item Upload artifacts, including our plugin as a zip file, and our LaTeX pdf.
+    \item Create a GitHub Release of the documentation and plugin.
+\end{itemize}
+
+Provided is the compile.yml file used to trigger our CI/CD pipeline in GitHub Actions:
+\begin{minted}{yaml}
+    name: Build LaTeX docs and plugin
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # --------- Checkout repo ---------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --------- Get short commit hash ---------
+      - name: Get short commit hash
+        id: vars
+        run: echo "hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      # --------- Compute version vMajor.Minor.Hash ---------
+      - name: Compute version without patch
+        id: ver
+        run: |
+          # Example: v1.1.0
+          TAG="${GITHUB_REF_NAME}"        
+          
+          NO_PATCH="${TAG%.*}"           
+          
+          FINAL_VERSION="${NO_PATCH}.${HASH}"   # v1.1.<hash>
+
+          echo "version=$FINAL_VERSION" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          HASH: ${{ steps.vars.outputs.hash }}
+
+      # --------- Run backend tests ---------
+      - name: Run backend tests
+        working-directory: server
+        run: |
+          pip install fastapi uvicorn pytest pytest-asyncio httpx
+          export PYTHONPATH="${GITHUB_WORKSPACE}"
+          pytest
+
+      # --------- Compile LaTeX ---------
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v4
+        with:
+          working_directory: latex
+          root_file: itManual.tex
+          latexmk_shell_escape: true
+          args: "-pdf -file-line-error -halt-on-error -interaction=nonstopmode"
+
+      # --------- Package the Figma plugin folder ---------
+      - name: Package Figma plugin
+        run: |
+          mkdir -p dist
+
+          ZIP_NAME="figma2aws-plugin-${FINAL_VERSION}.zip"
+
+          echo "Final version = ${FINAL_VERSION}"
+          echo "ZIP name = ${ZIP_NAME}"
+
+          zip -r "dist/${ZIP_NAME}" plugin
+        env:
+          FINAL_VERSION: ${{ steps.ver.outputs.version }}
+
+      # --------- Upload artifacts ---------
+      - name: Upload LaTeX PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: latex-pdf
+          path: latex/*.pdf
+          if-no-files-found: ignore
+
+      - name: Upload plugin zip artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-zip
+          path: dist/*.zip
+
+      # --------- GitHub Release ---------
+      - name: Create GitHub Release and upload assets
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Release ${{ steps.ver.outputs.version }}"
+          files: |
+            latex/*.pdf
+            dist/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+\end{minted}
+
+\begin{center}
+\includegraphics[width=\textwidth]{png/finalProject/githubAction.png}\\
+\textit{Figure: Our CI/CD pipeline successfully run on GitHub Actions.}
+\end{center}
+
+\section{SWOT Analysis of Selected DevOps Tools}
+\label{sec:swot}
+
+To evaluate the effectiveness of our DevOps toolchain, we performed a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis on two core tools used in the project: \textbf{GitHub Actions} for CI/CD automation and \textbf{tmux} for runtime orchestration of long-running deployment tasks.
+
+\subsection{GitHub Actions}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item Efficient integration with project repositories
+    \item Automatic CI/CD execution on push and tag events
+    \item Large marketplace of third-party actions
+\end{itemize}
+
+\textbf{Weaknesses}
+\begin{itemize}
+    \item YAML configuration files grow in complexity as pipelines expand
+    \item Debugging failures can be tedious due to limited interactive inspection
+\end{itemize}
+
+\textbf{Opportunities}
+\begin{itemize}
+    \item Strengthening security practices through improved secrets management
+    \item Enhanced integration with security analysis tools
+    \item AI-assisted pipeline optimization and diagnostics
+    \item Deeper integration with cloud platforms such as AWS and Docker-based workflows
+\end{itemize}
+
+\textbf{Threats}
+\begin{itemize}
+    \item Competition from alternative CI/CD platforms such as Jenkins and CircleCI
+    \item Pipeline failures caused by misconfiguration or breaking changes in third-party actions
+\end{itemize}
+
+\subsection{tmux}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item Supports long-running tasks executing in parallel (used for Claude Code runner)
+    \item Low overhead with minimal external dependencies
+    \item Well-suited for automation through shell scripts
+\end{itemize}
+
+\textbf{Weaknesses}
+\begin{itemize}
+    \item No native security controls
+    \item Requires extensive logging for effective debugging
+\end{itemize}
+
+\textbf{Opportunities}
+\begin{itemize}
+    \item Parallel monitoring and logging of active sessions
+    \item Integration with cloud-based monitoring through SSH access
+\end{itemize}
+
+\textbf{Threats}
+\begin{itemize}
+    \item Resource waste if terminal sessions are not properly terminated
+    \item Increased security risk in multi-user environments
+\end{itemize}
+
+
+\section{Testing Tools}
+Automated testing for this project is implemented using \textbf{pytest}, a modern Python testing framework designed for fast, isolated, and CI-friendly execution. The test suite focuses on \textbf{unit testing} both API endpoints and internal utility functions while deliberately avoiding external system side effects.
+
+All tests are executed automatically as part of the CI/CD pipeline, and a failure in any test causes the pipeline to terminate before packaging or deployment.
+
+\subsection{Testing Strategy}
+
+The testing strategy emphasizes:
+\begin{itemize}
+    \item Unit-level isolation
+    \item Deterministic execution
+    \item Fast feedback during continuous integration
+\end{itemize}
+
+FastAPI endpoints are tested using FastAPI's \texttt{TestClient}, which allows HTTP requests to be exercised without running a live server. Resource-intensive deployment logic is mocked where necessary to preserve unit test boundaries.
+
+\subsection{Create Endpoint Unit Test}
+
+The \texttt{/create} endpoint normally invokes external deployment logic involving tmux sessions and system-level commands. To ensure fast and reliable unit testing, this behavior is mocked using pytest's \texttt{monkeypatch} fixture.
+
+\begin{minted}[
+    fontsize=\small,
+    breaklines,
+]{python}
+from fastapi.testclient import TestClient
+from server.main import app
+
+client = TestClient(app)
+
+def test_create_route_mocked(monkeypatch):
+    # Mock the heavy deployment logic
+    def mock_launch(link):
+        return ("session123", 3500, "/root/deployments/project_123")
+
+    monkeypatch.setattr("server.main.launch_claude_code", mock_launch)
+
+    response = client.post("/create", json={"link": "https://figma.com/file/xyz"})
+
+    assert response.status_code == 200
+
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["deployment_url"] == "http://159.203.129.168:3500"
+    assert data["tmux_session"] == "session123"
+\end{minted}
+
+This test verifies correct request handling, response structure, and logic flow without invoking real deployment infrastructure.
+
+\subsection{Health Check Endpoint Test}
+
+A lightweight health check endpoint is tested to ensure the application is responsive and operational.
+
+\begin{minted}[
+    fontsize=\small,
+    breaklines,
+]{python}
+from fastapi.testclient import TestClient
+from server.main import app
+
+client = TestClient(app)
+
+def test_health():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "healthy"}
+\end{minted}
+
+This test provides a fast validation signal that the service can accept and process requests.
+
+\subsection{Internal Utility Function Test}
+
+In addition to API-level testing, internal utility functions are tested independently of the web layer. The following test validates that dynamically allocated ports fall within a predefined safe range.
+
+\begin{minted}[
+    fontsize=\small,
+    breaklines,
+]{python}
+from server.main import get_available_port
+
+def test_port_range():
+    port = get_available_port()
+    assert 3001 <= port <= 3999
+\end{minted}
+
+Testing internal functions directly improves confidence in application logic while maintaining clear separation of concerns.
+
+\subsection{CI/CD Integration}
+
+All tests are executed automatically during the testing stage of the CI/CD pipeline using the \texttt{pytest} command. Test results are displayed in the pipeline logs, and any failure prevents the creation of a deployable artifact.
+
+\subsection{Summary}
+
+\begin{itemize}
+    \item \textbf{Testing Tool:} Pytest
+    \item \textbf{Test Type:} Unit testing
+    \item \textbf{Automation Level:} Fully automated
+    \item \textbf{Pipeline Integration:} Yes
+\end{itemize}
+
+\section{Deployment}
+Deployment in this project follows a \textbf{package-based deployment model}. Rather than using containerization technologies such as Docker, the system produces a \textbf{versioned ZIP archive} that serves as the deployable artifact. This approach satisfies the deployment requirements of the DevOps pipeline while remaining lightweight and transparent.
+
+\subsection{Deployable Artifact}
+
+The CI/CD pipeline produces a ZIP file containing the generated plugin. Each artifact is versioned using the \texttt{Major.Minor.Changelist} format to ensure traceability across builds.
+\begin{center}
+\includegraphics[width=\textwidth]{png/finalProject/releases.png}\\
+\textit{Figure: Our documentation and figma plugin zip file produced as a packaged release from our CI/CD pipeline}
+\end{center}
+
+
+
+\subsection{Runtime Deployment Model}
+
+At runtime, deployment is orchestrated dynamically by the FastAPI service implemented in \texttt{main.py}. When a client submits a request to the \texttt{/create} endpoint, the server performs the following actions:
+
+\begin{enumerate}
+    \item Allocates an available network port
+    \item Creates an isolated project directory on the server
+    \item Launches the application generation process inside a tmux terminal session
+    \item Exposes the running application via a public URL
+    \item Automatically cleans up resources after a fixed timeout
+\end{enumerate}
+
+This deployment process allows applications to be instantiated on demand from Figma without requiring persistent containers or manual server configuration.
+
+\subsection{Cloud Execution Environment}
+
+The deployment runtime executes on a DigitalOcean droplet. Applications generated by the system are bound to dynamically assigned ports and exposed via the droplet’s public IP address. Automated cleanup logic ensures that temporary deployments do not consume system resources indefinitely.
+
+\subsection{Summary}
+
+\begin{itemize}
+    \item \textbf{Deployment Method:} Versioned ZIP artifact
+    \item \textbf{Deployment Target:} DigitalOcean virtual machine
+    \item \textbf{Runtime Orchestration:} FastAPI + tmux
+    \item \textbf{Cleanup Strategy:} Time-based resource cleanup
+\end{itemize}
+
+
+\section{Monitoring}
+For the monitoring of our plugin, we used the native monitoring tools found on \textbf{Digital Ocean}. 
+\begin{center}
+\includegraphics[width=\textwidth]{png/finalProject/cpuPercent.png}\\
+\textit{Figure: CPU \% of our Digital Ocean Droplet used.}
+\end{center}
+
+\begin{center}
+\includegraphics[width=\textwidth]{png/finalProject/loadandMemory.png}\\
+\textit{Figure: Load and memory consumed on our Digital Ocean Droplet}
+\end{center}
+
+\begin{center}
+\includegraphics[width=\textwidth]{png/finalProject/moreMetrics.png}\\
+\textit{Figure: Disk I/O, Disk usage, and bandwidth consumed on our Digital Ocean Droplet.}
+\end{center}
+
+
+\section{Architecture Reverse Documentation Tool}
+To provide a UML class diagram of our Figma plugin, we used \textbf{Pyreverse}. To do so, we refactored our code to implement an object oriented structure, allowing for PyReverse to create objects from our codebase.
+\begin{center}
+\includegraphics[width=\textwidth]{png/finalProject/classes_main_oop.png}\\
+\textit{Figure: PyReverse UML class diagram output.}
+\end{center}
