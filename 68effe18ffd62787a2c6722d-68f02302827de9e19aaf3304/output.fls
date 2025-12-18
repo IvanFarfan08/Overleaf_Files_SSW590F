@@ -386,6 +386,10 @@ INPUT ./itJenkins.tex
 INPUT ./itJenkins.tex
 INPUT ./itLoadBalancerVirtualHost.tex
 INPUT ./itLoadBalancerVirtualHost.tex
+INPUT ./itFinalProject.tex
+INPUT ./itFinalProject.tex
+INPUT ./itfinaliproject.tex
+INPUT ./itfinaliproject.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/textcomp.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/textcomp.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/ot1txr.fd
@@ -438,9 +442,6 @@ INPUT itJenkins.aux
 INPUT ./itLoadBalancerVirtualHost.aux
 INPUT ./itLoadBalancerVirtualHost.aux
 INPUT itLoadBalancerVirtualHost.aux
-INPUT ./itFinalProject.aux
-INPUT ./itFinalProject.aux
-INPUT itFinalProject.aux
 OUTPUT output.aux
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd

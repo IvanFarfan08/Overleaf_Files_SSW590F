@@ -16,9 +16,8 @@ A level-1 auxiliary file: itGithubAction.aux
 A level-1 auxiliary file: itPrometheusGrafana.aux
 A level-1 auxiliary file: itJenkins.aux
 A level-1 auxiliary file: itLoadBalancerVirtualHost.aux
-A level-1 auxiliary file: itFinalProject.aux
 I couldn't open auxiliary file itfinaliproject.aux
----line 24 of file output.aux
+---line 23 of file output.aux
  : \@input{itfinaliproject.aux
  :                            }
 I'm skipping whatever remains of this command
@@ -37,7 +36,7 @@ Database file #1: bibfile.bib
 Done.
 You've used 0 entries,
             3975 wiz_defined-function locations,
-            812 strings with 7362 characters,
+            811 strings with 7344 characters,
 and the built_in function-call counts, 92 in all, are:
 = -- 0
 > -- 0
