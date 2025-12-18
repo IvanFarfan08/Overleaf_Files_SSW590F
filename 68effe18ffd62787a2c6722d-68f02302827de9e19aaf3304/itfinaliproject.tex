@@ -211,3 +211,22 @@ non-critical LaTeX warnings while still enforcing correct build output.
     \caption{Perforce Helix Swarm .}
     \label{fig:overleaf-port}
 \end{figure}
+
+\subsection{Demonstration Scope Adjustment}
+
+During the Jenkins integration demonstration, a reduced version of the LaTeX
+project was used for the automated build. The full document relies heavily on
+the \texttt{minted} package, which requires additional configuration for
+shell-escape permissions and Python dependencies inside containerized
+environments.
+
+To ensure a reliable and repeatable CI demonstration within the project
+constraints, a smaller LaTeX file was selected that still exercised the full
+Perforce Jenkins workflow, including source retrieval, automated compilation,
+and artifact archiving. This approach allowed the continuous integration
+pipeline to be demonstrated clearly without being impacted by environment-specific
+package limitations.
+
+The same Jenkins configuration can be applied to the complete LaTeX project
+once the container environment is extended to fully support all required
+packages.

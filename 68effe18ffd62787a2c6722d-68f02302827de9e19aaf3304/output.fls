@@ -442,6 +442,9 @@ INPUT itJenkins.aux
 INPUT ./itLoadBalancerVirtualHost.aux
 INPUT ./itLoadBalancerVirtualHost.aux
 INPUT itLoadBalancerVirtualHost.aux
+INPUT ./itfinaliproject.aux
+INPUT ./itfinaliproject.aux
+INPUT itfinaliproject.aux
 OUTPUT output.aux
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd

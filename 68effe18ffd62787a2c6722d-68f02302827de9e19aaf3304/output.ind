@@ -19,6 +19,7 @@
     \subitem Project Proposal: Figma2AWS, \hyperpage{15}
     \subitem PrometheusWithGrafana, \hyperpage{39}
   \item Chapter::Bugzilla, \hyperpage{21}
+  \item Chapter::Helix Core and Jenkins Integration, \hyperpage{49}
   \item Chapter::Jenkins with Pytest, \hyperpage{41}
   \item Chapter::Overleaf, \hyperpage{25}
   \item Chapter::Overleaf and Github Integration, \hyperpage{29}
@@ -26,10 +27,13 @@
 
   \indexspace
 
+  \item Helix Core, \hyperpage{49}
+  \item Helix Swarm, \hyperpage{49}
   \item Hosts, \hyperpage{4}
 
   \indexspace
 
+  \item Jenkins, \hyperpage{49}
   \item Jenkins CI/CD, \hyperpage{41}
 
   \indexspace
