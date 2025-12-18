@@ -738,8 +738,3 @@ OUTPUT itJenkins.aux
 INPUT ./itJenkins.tex
 INPUT ./itJenkins.tex
 INPUT itJenkins.tex
-INPUT ./png/jenkins_running.png
-INPUT ./png/jenkins_running.png
-INPUT ./png/jenkins_running.png
-INPUT ./png/jenkins_running.png
-INPUT ./png/jenkins_running.png
