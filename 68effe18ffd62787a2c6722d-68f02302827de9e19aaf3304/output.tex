@@ -2,7 +2,7 @@
 % dmuresan@stevens.edu
 % Edit and adjust as needed.
 \documentclass[12pt]{cornell}
-\IfFileExists{version.tex}{\input{version}}{\newcommand{\Version}{DEV}}
+
 
 
 % add index support
@@ -210,7 +210,7 @@ urlcolor=blue
 \newtheorem{userStory}{User Story}
 
 % command for adding a version to the document
-\newcommand{\VERSION}{Version 0.0.0}
+%\newcommand{\VERSION}{Version 0.0.0}
 
 % Family -- enter the name of the family that it belongs to: Chapter, Figure, Table, etc.
 % Name -- name of the family member: file name, table name, etc.
@@ -320,6 +320,7 @@ urlcolor=blue
 % glossaries to organize the document glossary
 %\usepackage[toc,chapter,numberedchapter = autolabel]{glossaries}
 \usepackage{glossaries}
+\newcommand{\fileversion}{build-HW9-v9.1.0}
 
 % glossary creation
 \input{itGlossary.tex}
@@ -347,7 +348,11 @@ itLaTeXDocker,
 itBugzilla,
 itOverleaf,
 itOverleafGithub,
-itGithubAction
+itGithubAction,
+itPrometheusGrafana,
+itJenkins,
+itLoadBalancerVirtualHost,
+itFinalProject
 }
 
 
@@ -375,7 +380,7 @@ itGithubAction
 
 
 \lfoot{Chapter \thechapter}
-\cfoot{\copyright Stevens -- \today \mbox{} -- Do Not Distribute! \\ Version: \Version}
+\cfoot{\copyright Stevens -- \today \mbox{} -- Do Not Distribute! \\}
 
 \rfoot{\thepage}
 
@@ -403,6 +408,10 @@ itGithubAction
 \include{itOverleaf}
 \include{itOverleafGithub}
 \include{itGithubAction}
+\include{itPrometheusGrafana}
+\include{itJenkins}
+\include{itLoadBalancerVirtualHost}
+\include{itFinalProject}
 
 %\appendix
 %\include{itAppendix}

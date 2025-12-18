@@ -1,0 +1,91 @@
+\chapter{Load Balancer and Virtual Hosts \\
+\small{\textit{-- Ivan Farfan, Johan Jaramillo, Ryan Davis}}}
+\index{Load Balancer and Virtual Hosts} 
+\index{Chapter!LBVH}
+\label{Chapter::LBVH}
+\section*{Load Balancer}
+
+\subsection*{1. Full Documentation}
+
+This project sets up an Nginx reverse proxy to act as a load balancer between two simple web servers (\texttt{web1} and \texttt{web2}). The load balancer distributes incoming requests.
+
+\begin{itemize}
+    \item \textbf{Technology Used:} Docker, Nginx, Docker Compose
+    \item \textbf{Directory:} \texttt{load-balanced-app/}
+    \item \textbf{Key Files:}
+    \begin{itemize}
+        \item \texttt{docker-compose.yml} – defines services: \texttt{lb-web1}, \texttt{lb-web2}, \texttt{loadbalancer}
+        \item \texttt{nginx/nginx.conf} – defines an upstream block and load balancing config
+        \item \texttt{web1/index.html} and \texttt{web2/index.html} – backend HTML responses
+    \end{itemize}
+    \item \textbf{How It Works:} When visiting the load balancer URL and refreshing, the response alternates between \texttt{lb-web1} and \texttt{lb-web2}, proving the round-robin behavior.
+\end{itemize}
+
+\subsection*{2. Access Link}
+
+\begin{itemize}
+    \item \textbf{Load Balancer URL:} \url{http://143.198.5.82:8080/}
+\end{itemize}
+
+
+
+
+\section*{Virtual Hosting / Reverse Proxy}
+
+\subsection*{1. Full Documentation}
+
+This configuration sets up Nginx to use virtual hosting, routing traffic to different web services based on the \texttt{Host} header. Visiting different hostnames returns different content.
+
+\begin{itemize}
+    \item \textbf{Technology Used:} Docker, Nginx, Docker Compose
+    \item \textbf{Directory:} \texttt{virtual-host-app/}
+    \item \textbf{Key Files:}
+    \begin{itemize}
+        \item \texttt{docker-compose.yml} – defines services: \texttt{web1}, \texttt{web2}, \texttt{proxy}
+        \item \texttt{nginx/nginx.conf} – contains server blocks for \texttt{web1.domain.com} and \texttt{web2.domain.com}
+        \item \texttt{web1/index.html} and \texttt{web2/index.html} – separate virtual host content
+    \end{itemize}
+    \item \textbf{How It Works:} Nginx listens on port 80 and checks the hostname. Requests to \texttt{web1.domain.com} are proxied to the \texttt{web1} container; \texttt{web2.domain.com} goes to \texttt{web2}.
+\end{itemize}
+
+\subsection*{2. Access Instructions}
+
+To access the virtual host links below, you must add the following lines to your local machine’s \texttt{/etc/hosts} file:
+
+\begin{verbatim}
+143.198.5.82 web1.domain.com
+143.198.5.82 web2.domain.com
+\end{verbatim}
+
+\subsection*{3. Access Links}
+
+\begin{itemize}
+    \item \textbf{Web1:} \url{http://web1.domain.com/}
+    \item \textbf{Web2:} \url{http://web2.domain.com/}
+\end{itemize}
+
+\subsection*{4. Screenshots}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{png/LBVH/web1Screenshot.png}
+    \caption{Load balancer web 1 page.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{png/LBVH/web2Screenshot.png}
+    \caption{Load balancer web 2 page.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{png/LBVH/virtualWeb1.png}
+    \caption{Virtually hosted web1.domain.com}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{png/LBVH/virtualWeb2.png}
+    \caption{Virtually hosted web2.domain.com}
+\end{figure}

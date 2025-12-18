@@ -13,17 +13,29 @@
     \subitem Hosts, \hyperpage{4}
     \subitem Kanban Setup, \hyperpage{1}
     \subitem LaTeXDocker, \hyperpage{19}
+    \subitem LBVH, \hyperpage{46}
     \subitem Linux Commands, \hyperpage{5}
     \subitem Passwords, \hyperpage{2}
     \subitem Project Proposal: Figma2AWS, \hyperpage{15}
+    \subitem PrometheusWithGrafana, \hyperpage{39}
   \item Chapter::Bugzilla, \hyperpage{21}
+  \item Chapter::Final Project, \hyperpage{49}
+  \item Chapter::Jenkins with Pytest, \hyperpage{41}
   \item Chapter::Overleaf, \hyperpage{25}
   \item Chapter::Overleaf and Github Integration, \hyperpage{29}
   \item Chapter::Overleaf GitHub Action, \hyperpage{35}
 
   \indexspace
 
+  \item Final Project, \hyperpage{49}
+
+  \indexspace
+
   \item Hosts, \hyperpage{4}
+
+  \indexspace
+
+  \item Jenkins CI/CD, \hyperpage{41}
 
   \indexspace
 
@@ -33,6 +45,7 @@
 
   \item latexdocker, \hyperpage{19}
   \item Linux Commands, \hyperpage{5}
+  \item Load Balancer and Virtual Hosts, \hyperpage{46}
 
   \indexspace
 
@@ -44,5 +57,6 @@
 
   \item Passwords, \hyperpage{2}
   \item Project Proposal: Figma2AWS, \hyperpage{15}
+  \item Prometheus with Grafana, \hyperpage{39}
 
 \end{theindex}
