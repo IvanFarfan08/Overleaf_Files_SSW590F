@@ -732,9 +732,3 @@ INPUT ./png/grafanaSS.png
 INPUT ./png/grafanaSS.png
 INPUT ./png/grafanaSS.png
 INPUT ./png/grafanaSS.png
-INPUT ./itJenkins.tex
-INPUT ./itJenkins.tex
-OUTPUT itJenkins.aux
-INPUT ./itJenkins.tex
-INPUT ./itJenkins.tex
-INPUT itJenkins.tex
