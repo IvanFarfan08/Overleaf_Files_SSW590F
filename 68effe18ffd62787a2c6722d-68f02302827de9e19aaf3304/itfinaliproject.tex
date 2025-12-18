@@ -70,13 +70,13 @@ p4 add ...
 p4 submit -d "Initial LaTeX project submission"
 \end{minted}
 
-After the initial submission, at least one additional change was made and submitted
+After the initial submission, one additional change was made and submitted
 to demonstrate active version control usage, satisfying the assignment requirements.
 
 \section{Helix Swarm Deployment and Code Review}
 
 \subsection{Swarm Installation}
-Helix Swarm was deployed on a separate DigitalOcean droplet and configured to connect
+Helix Swarm was deployed on the same DigitalOcean droplet and configured to connect
 to the Helix Core server. Swarm was linked to the Perforce instance by specifying the
 server address, service user, and authentication credentials during setup.
 
@@ -97,31 +97,109 @@ in Git-based systems.
 
 \section{Jenkins Deployment}
 
-\subsection{Jenkins Installation}
-Jenkins was deployed on a separate droplet alongside an existing Overleaf instance.
-This droplet was responsible for running CI jobs and interacting with the Perforce
-server remotely.
+\subsection{Perforce Plugin and SCM Configuration}
+To enable Jenkins to interact with Helix Core, the Perforce plugin was installed
+from the Jenkins plugin manager. This plugin provides native support for Perforce
+workspaces, authentication, and changelist-based builds.
 
-Jenkins was installed using the official package repository and verified through
-its web-based management interface.
+Within the Jenkins job configuration, Perforce was selected as the Source Code
+Management (SCM) provider. A dedicated Perforce credential was created in Jenkins
+using the service account, allowing Jenkins to authenticate securely with the Helix
+Core server.
 
-\subsection{Perforce Integration in Jenkins}
-The Jenkins Perforce Plugin was installed to enable native interaction with Helix Core.
-A Jenkins credential was created using the \texttt{perforce} user credentials, allowing
-Jenkins jobs to authenticate securely with the Perforce server.
-
-This setup allows Jenkins pipelines to:
+The SCM configuration defined:
 \begin{itemize}
-  \item Connect to the remote Perforce server
-  \item Sync the latest changelists from the depot
-  \item Use changelist numbers as part of build metadata
+  \item The Perforce server address and port
+  \item The Jenkins Perforce service user
+  \item A client workspace specification managed automatically by Jenkins
 \end{itemize}
 
-\section{Preparation for CI/CD Automation}
-With Helix Core, Swarm, and Jenkins successfully deployed and integrated, the environment
-was fully prepared for CI/CD automation. Jenkins was able to authenticate against the
-Perforce server and retrieve LaTeX source files, enabling automated compilation and
-versioned PDF generation in later stages of the pipeline.
+This setup allowed Jenkins to dynamically create and manage Perforce workspaces
+for each build execution.
 
-The Jenkins pipeline configuration and LaTeX compilation process are discussed in
-subsequent sections of this report.
+The pipeline uses Docker to provide a consistent LaTeX build environment
+and is designed to ignore LaTeX warnings while failing only if the expected
+PDF output is not generated.
+
+\begin{minted}{groovy}
+pipeline {
+    agent any
+
+    environment {
+        PDF_NAME = "itManual.pdf"
+    }
+
+    stages {
+
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build LaTeX') {
+            steps {
+                sh '''
+                set +e
+
+                echo "Running LaTeX build inside Docker (warnings ignored)..."
+
+                docker run --rm \
+                  -v "$PWD":/data \
+                  -w /data \
+                  texlive/texlive:latest \
+                  latexmk -f -pdf -shell-escape -interaction=nonstopmode itManual.tex
+
+                if [ ! -f "${PDF_NAME}" ]; then
+                    echo "PDF not generated — failing build"
+                    exit 1
+                fi
+
+                echo "PDF generated successfully"
+                exit 0
+                '''
+            }
+        }
+
+        stage('Verify PDF') {
+            steps {
+                sh '''
+                if [ ! -f "${PDF_NAME}" ]; then
+                    echo "PDF not found"
+                    exit 1
+                fi
+                echo "PDF verification passed"
+                '''
+            }
+        }
+
+        stage('Archive PDF') {
+            steps {
+                archiveArtifacts artifacts: "${PDF_NAME}", fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Build completed successfully"
+        }
+        failure {
+            echo "Build failed, check LaTeX logs"
+        }
+    }
+}
+\end{minted}
+
+This pipeline demonstrates how Jenkins can be integrated with Perforce
+to automatically retrieve source files, execute builds in a controlled
+environment, and archive build artifacts. By validating only the existence
+of the final PDF, the pipeline avoids unnecessary failures caused by
+non-critical LaTeX warnings while still enforcing correct build output.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{png/PERFORCE.png}
+    \caption{Perforce Helix Swarm .}
+    \label{fig:overleaf-port}
+\end{figure}

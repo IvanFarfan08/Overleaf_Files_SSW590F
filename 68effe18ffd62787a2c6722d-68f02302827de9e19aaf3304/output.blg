@@ -17,6 +17,11 @@ A level-1 auxiliary file: itPrometheusGrafana.aux
 A level-1 auxiliary file: itJenkins.aux
 A level-1 auxiliary file: itLoadBalancerVirtualHost.aux
 A level-1 auxiliary file: itFinalProject.aux
+I couldn't open auxiliary file itfinaliproject.aux
+---line 24 of file output.aux
+ : \@input{itfinaliproject.aux
+ :                            }
+I'm skipping whatever remains of this command
 The style file: IEEEtran.bst
 I found no \citation commands---while reading file output.aux
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -32,7 +37,7 @@ Database file #1: bibfile.bib
 Done.
 You've used 0 entries,
             3975 wiz_defined-function locations,
-            811 strings with 7343 characters,
+            812 strings with 7362 characters,
 and the built_in function-call counts, 92 in all, are:
 = -- 0
 > -- 0
@@ -71,4 +76,4 @@ warning$ -- 0
 while$ -- 0
 width$ -- 0
 write$ -- 19
-(There was 1 error message)
+(There were 2 error messages)
